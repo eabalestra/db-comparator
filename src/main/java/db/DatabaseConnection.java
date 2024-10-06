@@ -10,13 +10,16 @@ public class DatabaseConnection {
     static String url = "";
     static String username = "";
     static String password = "";
+    static String schema = "";
     static Connection connection = null;
 
-    public DatabaseConnection() {
+    public DatabaseConnection(int databaseNumber) {
         PropertiesLoader loader = new PropertiesLoader("database.properties");
-        url = loader.getProperty("db.url");
-        username = loader.getProperty("db.username");
-        password = loader.getProperty("db.password");
+        String dbPrefix = "db" + databaseNumber;
+        url = loader.getProperty(dbPrefix + ".url");
+        username = loader.getProperty(dbPrefix + ".username");
+        password = loader.getProperty(dbPrefix + ".password");
+        schema = loader.getProperty(dbPrefix + ".schema");
     }
 
     public Connection getInstance() throws SQLException {
@@ -24,5 +27,9 @@ public class DatabaseConnection {
             connection = DriverManager.getConnection(url, username, password);
         }
         return connection;
+    }
+
+    public String getSchema() {
+        return schema;
     }
 }
