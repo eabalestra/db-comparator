@@ -45,4 +45,13 @@ public class Column {
         
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Column{" +
+                "name='" + name + '\'' +
+                ", type=" + type +
+                '}';
+    }
+
 }

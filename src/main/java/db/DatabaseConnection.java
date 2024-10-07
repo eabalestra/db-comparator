@@ -20,6 +20,8 @@ public class DatabaseConnection {
         username = loader.getProperty(dbPrefix + ".username");
         password = loader.getProperty(dbPrefix + ".password");
         schema = loader.getProperty(dbPrefix + ".schema");
+        System.out.println("Database Connection : " + dbPrefix);
+        System.out.println("URL : " + url);
     }
 
     public Connection getInstance() throws SQLException {

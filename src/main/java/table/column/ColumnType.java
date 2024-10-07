@@ -2,9 +2,12 @@ package table.column;
 
 public enum ColumnType {
     VARCHAR,
-    INTEGER,
+    INT4,
     DOUBLE,
-    DATE;
+    FLOAT8,
+    TIMESTAMP,
+    DATE,
+    SERIAL;
 
     public static ColumnType fromString(String type) {
         for (ColumnType columnType : ColumnType.values()) {

@@ -49,4 +49,16 @@ public class Function {
 		return true;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Function { ");
+        sb.append("name = '").append(name).append('\'');
+        sb.append(", returnType = '").append(returnType).append('\'');
+        sb.append(", listParams = ").append(listParams);
+        sb.append(" }");
+        return sb.toString();
+    }
+
+
 }

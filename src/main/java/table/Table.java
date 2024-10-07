@@ -112,4 +112,17 @@ public class Table {
             primaryKeys.equals(other.primaryKeys) &&
             uniqueKeys.equals(other.uniqueKeys);
     }
+
+    @Override
+    public String toString() {
+        return "Table{\n" +
+                "name='" + name + '\'' +
+                ",\n columns=" + columns +
+                ",\n triggers=" + triggers +
+                ",\n indexes=" + indexes +
+                ",\n foreignKeys=" + foreignKeys +
+                ",\n primaryKeys=" + primaryKeys +
+                ",\n uniqueKeys=" + uniqueKeys + "\n" +
+                '}';
+    }
 }

@@ -13,19 +13,21 @@ import table.column.Column;
 import table.column.ColumnType;
 import table.Table;
 import table.foreignkey.ForeignKey;
+import table.trigger.Trigger;
 
 public class DatabaseSchemaLoader {
 
     public DatabaseSchemaLoader() {}
 
     public Database loadDatabaseSchema(DatabaseConnection databaseConnection) {
-        Database resultDatabase = new Database();
         String schema = databaseConnection.getSchema();
         String[] types = { "TABLE" };
+        Database resultDatabase = new Database();
         try {
             Connection connection = databaseConnection.getInstance();
             DatabaseMetaData metaData = connection.getMetaData();
             ResultSet resultSetTables = metaData.getTables(null, schema, null, types);
+            
             while (resultSetTables.next()) {
                 String tableName = resultSetTables.getString("TABLE_NAME");
                 Table table = new Table(tableName);
@@ -42,6 +44,8 @@ public class DatabaseSchemaLoader {
                 List<ForeignKey> fkList = loadForeignKeys(metaData, schema, tableName);
                 table.setForeignKeys(fkList);
 
+                List<Trigger> triggerList = loadTriggers(metaData, schema, tableName);
+                
                 resultDatabase.addTable(table);
             }
         } catch (Exception e) {
@@ -49,6 +53,17 @@ public class DatabaseSchemaLoader {
         }
         return resultDatabase;
     }
+
+    private List<Trigger> loadTriggers(DatabaseMetaData metaData, String schema, String tableName) {
+        List<Trigger> triggerList = new ArrayList<>();
+        ResultSet resultSetTriggers = metaData.
+        
+        while (resultSetTriggers.ne) {
+            
+        }
+        
+        return triggerList;
+	}
 
     private static List<ForeignKey> loadForeignKeys(DatabaseMetaData metaData, String schema, String tableName) throws SQLException {
         List<ForeignKey> fkList = new ArrayList<>();
