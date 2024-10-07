@@ -1,4 +1,4 @@
-package table;
+package table.column;
 
 public enum ColumnType {
     VARCHAR,

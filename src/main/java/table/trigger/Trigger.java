@@ -1,4 +1,4 @@
-package table;
+package table.trigger;
 
 public class Trigger {
     private String name;

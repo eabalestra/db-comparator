@@ -1,6 +1,10 @@
 package table;
 
-import java.util.HashMap;
+import table.column.Column;
+import table.foreignkey.ForeignKey;
+import table.index.Index;
+import table.trigger.Trigger;
+
 import java.util.List;
 
 public class Table {
@@ -8,13 +12,12 @@ public class Table {
     private String name;
     private List<Trigger> triggers;
     private List<Index> indexes;
-    private HashMap<String, String> foreignKeys; // key = name of the referenced table, value = name of the column
+    private List<ForeignKey> foreignKeys;
     private List<String> primaryKeys;
     private List<String> uniqueKeys;
 
     public Table(String name) {
         this.name = name;
-        foreignKeys = new HashMap<>();
     }
 
     public void setColumns(List<Column> columns) {
@@ -61,16 +64,16 @@ public class Table {
         indexes.add(index);
     }
 
-    public void setForeignKeys(HashMap<String,String> foreignKeys) {
+    public void setForeignKeys(List<ForeignKey> foreignKeys) {
         this.foreignKeys = foreignKeys;
     }
 
-    public HashMap<String,String>getForeignKeys() {
+    public List<ForeignKey> getForeignKeys() {
         return foreignKeys;
     }
 
-    public void addForeignKey(String foreignTableName, String foreginColumnName) {
-        foreignKeys.put(foreignTableName, foreginColumnName);
+    public void addForeignKey(ForeignKey foreignKey) {
+        foreignKeys.add(foreignKey);
     }
 
     public void setPrimaryKeys(List<String> primaryKeys) {

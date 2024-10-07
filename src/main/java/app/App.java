@@ -2,7 +2,7 @@ package app;
 
 import java.sql.SQLException;
 
-import dataloader.DataLoader;
+import dataloader.DatabaseSchemaLoader;
 import db.Database;
 import db.DatabaseConnection;
 
@@ -12,7 +12,7 @@ public class App {
     private DatabaseConnection databaseConnectionTwo;
     private Database databaseOne;
     private Database databaseTwo;
-    private DataLoader dbLoader;
+    private DatabaseSchemaLoader dbLoader;
 
     public App() {
         loadDatabaseDriver();
@@ -20,9 +20,9 @@ public class App {
     }
 
     public void execute() throws SQLException {
-        dbLoader = new DataLoader();
-        databaseOne = dbLoader.getDatabase(databaseConnectionOne);
-        databaseTwo = dbLoader.getDatabase(databaseConnectionTwo);
+        dbLoader = new DatabaseSchemaLoader();
+        databaseOne = dbLoader.loadDatabaseSchema(databaseConnectionOne);
+        databaseTwo = dbLoader.loadDatabaseSchema(databaseConnectionTwo);
     }
 
     private void loadDatabaseDriver() {
@@ -37,14 +37,5 @@ public class App {
     private void initializeConnections() {
         databaseConnectionOne = new DatabaseConnection(1);
         databaseConnectionTwo = new DatabaseConnection(2);
-    }
-
-    public static void main(String[] args) {
-        App app = new App();
-        try {
-            app.execute();
-        } catch (SQLException e) {
-            System.err.println("Error executing application: " + e.getMessage());
-        }
     }
 }

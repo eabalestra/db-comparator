@@ -1,4 +1,4 @@
-package table;
+package table.column;
 
 public class Column {
     private String name;
