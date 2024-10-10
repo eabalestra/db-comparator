@@ -2,8 +2,10 @@ package dataloader;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,17 +19,19 @@ import table.trigger.Trigger;
 
 public class DatabaseSchemaLoader {
 
-    public DatabaseSchemaLoader() {}
+    public DatabaseSchemaLoader() {
+    }
 
     public Database loadDatabaseSchema(DatabaseConnection databaseConnection) {
         String schema = databaseConnection.getSchema();
         String[] types = { "TABLE" };
         Database resultDatabase = new Database();
+
         try {
             Connection connection = databaseConnection.getInstance();
             DatabaseMetaData metaData = connection.getMetaData();
             ResultSet resultSetTables = metaData.getTables(null, schema, null, types);
-            
+
             while (resultSetTables.next()) {
                 String tableName = resultSetTables.getString("TABLE_NAME");
                 Table table = new Table(tableName);
@@ -44,8 +48,18 @@ public class DatabaseSchemaLoader {
                 List<ForeignKey> fkList = loadForeignKeys(metaData, schema, tableName);
                 table.setForeignKeys(fkList);
 
-                List<Trigger> triggerList = loadTriggers(metaData, schema, tableName);
-                
+                // List<Trigger> triggerList = loadTriggers(metaData, schema, tableName);
+                // table.setTriggers(triggerList);
+
+                String selectQuery = "SELECT event_object_table AS tab_name ,trigger_name FROM information_schema";
+
+                Statement statement = connection.createStatement();
+                ResultSet result = statement.executeQuery(selectQuery);
+                while (result.next()) {
+                    String triggerName = result.getString("TRIGGER_NAME");
+                    System.out.println(triggerName);
+                }
+
                 resultDatabase.addTable(table);
             }
         } catch (Exception e) {
@@ -54,18 +68,13 @@ public class DatabaseSchemaLoader {
         return resultDatabase;
     }
 
-    private List<Trigger> loadTriggers(DatabaseMetaData metaData, String schema, String tableName) {
+    private List<Trigger> loadTriggers(DatabaseMetaData metaData, String schema, String tableName) throws SQLException {
         List<Trigger> triggerList = new ArrayList<>();
-        ResultSet resultSetTriggers = metaData.
-        
-        while (resultSetTriggers.ne) {
-            
-        }
-        
         return triggerList;
-	}
+    }
 
-    private static List<ForeignKey> loadForeignKeys(DatabaseMetaData metaData, String schema, String tableName) throws SQLException {
+    private static List<ForeignKey> loadForeignKeys(DatabaseMetaData metaData, String schema, String tableName)
+            throws SQLException {
         List<ForeignKey> fkList = new ArrayList<>();
         ResultSet resultSetForeignKeys = metaData.getImportedKeys(null, schema, tableName);
         while (resultSetForeignKeys.next()) {
@@ -80,7 +89,8 @@ public class DatabaseSchemaLoader {
         return fkList;
     }
 
-    private static List<String> loadUniqueKeys(DatabaseMetaData metaData, String schema, String tableName) throws SQLException {
+    private static List<String> loadUniqueKeys(DatabaseMetaData metaData, String schema, String tableName)
+            throws SQLException {
         List<String> ukList = new ArrayList<>();
         ResultSet resultSetUniqueKeys = metaData.getIndexInfo(null, schema, tableName, true, false);
         while (resultSetUniqueKeys.next()) {
@@ -90,7 +100,8 @@ public class DatabaseSchemaLoader {
         return ukList;
     }
 
-    private List<String> loadPrimaryKeys(DatabaseMetaData metaData, String schema, String tableName) throws SQLException {
+    private List<String> loadPrimaryKeys(DatabaseMetaData metaData, String schema, String tableName)
+            throws SQLException {
         List<String> pkList = new ArrayList<>();
         ResultSet resultSetPrimaryKeys = metaData.getPrimaryKeys(null, schema, tableName);
         while (resultSetPrimaryKeys.next()) {

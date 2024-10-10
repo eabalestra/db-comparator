@@ -117,12 +117,13 @@ public class Table {
     public String toString() {
         return "Table{\n" +
                 "name='" + name + '\'' +
-                ",\n columns=" + columns +
-                ",\n triggers=" + triggers +
-                ",\n indexes=" + indexes +
-                ",\n foreignKeys=" + foreignKeys +
-                ",\n primaryKeys=" + primaryKeys +
-                ",\n uniqueKeys=" + uniqueKeys + "\n" +
+                ",\ncolumns=" + columns +
+                ",\ntriggers=" + triggers +
+                ",\nindexes=" + indexes +
+                ",\nforeignKeys=" + foreignKeys +
+                ",\nprimaryKeys=" + primaryKeys +
+                ",\nuniqueKeys=" + uniqueKeys + "\n" +
+                ",\ntriggers=" + triggers + "\n" +
                 '}';
     }
 }

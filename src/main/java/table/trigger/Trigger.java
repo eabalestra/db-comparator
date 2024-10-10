@@ -38,16 +38,25 @@ public class Trigger {
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
-            return true; 
+            return true;
         }
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
 
-        Trigger other = (Trigger) obj; 
+        Trigger other = (Trigger) obj;
 
         return name.equals(other.name) &&
-            triggerTiming.equals(other.triggerTiming) &&
-            tableName.equals(other.tableName);
+                triggerTiming.equals(other.triggerTiming) &&
+                tableName.equals(other.tableName);
+    }
+
+    @Override
+    public String toString() {
+        return "Trigger{" +
+                "name='" + name + '\'' +
+                ", triggerTiming='" + triggerTiming + '\'' +
+                ", tableName='" + tableName + '\'' +
+                '}';
     }
 }

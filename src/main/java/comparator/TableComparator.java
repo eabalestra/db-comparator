@@ -1,9 +1,11 @@
 package comparator;
 
+import java.util.ArrayList;
 import java.util.List;
 import db.Database;
 import logger.Logger;
 import table.Table;
+import table.column.Column;
 
 public class TableComparator {
     private Database db1;
@@ -35,7 +37,50 @@ public class TableComparator {
         List<Table> db1Tables = db1.getTables();
         List<Table> db2Tables = db2.getTables();
         
+        List<String> db1TableNames = getListOfTableNames(db1Tables);
+        List<String> db2TableNames = getListOfTableNames(db2Tables);
+
+        List<Table> db1AdditionalTables = new ArrayList<>();
+        List<Table> db2AdditionalTables = new ArrayList<>();
+
+        for (String tableName : db1TableNames) {
+            if (db2TableNames.contains(tableName)) {
+                compareTablesWithSameName(findTableByName(tableName, db1AdditionalTables), findTableByName(tableName, db2AdditionalTables));
+            }
+        }
+
+        /* las que tengan mismo nombre, compararlas
+        las que no coinciden en nombre, agregarlas a las diferencias. */
+    }
+
+    private void compareTablesWithSameName(Table table1, Table table2) {
+        compareColumns(table1, table2);
+        // compareTriggers();
+        // compareKeys();
+    }
+
+    private void compareColumns(Table table1, Table table2) {
+        List<Column> table1Columns = table1.getColumns();
+        List<Column> table2Columns = table2.getColumns();
+
         
+    }
+
+    private List<String> getListOfTableNames(List<Table> tables) {
+        List<String> tablesNames = new ArrayList<>();
+        for (Table table : tables) {
+            tablesNames.add(table.getName());
+        }
+        return tablesNames;
+    }
+
+    private Table findTableByName(String name, List<Table> tables) {
+        for (Table table : tables) {
+            if (table.getName() == name) {
+                return table;
+            }
+        }
+        return null;
     }
 
 }
