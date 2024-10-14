@@ -61,10 +61,6 @@ public class Index {
         this.type = type;
     }
 
-    @Override
-    public String toString() {
-        return "Index[name=" + name + ", table=" + tableName + ", fields=" + fields + ", isAsc=" + isAsc + ", type=" + type + "]";
-    }
 
     @Override
     public boolean equals(Object obj) {
@@ -82,5 +78,16 @@ public class Index {
             fields.equals(other.fields) &&
             isAsc == other.isAsc &&
             type == other.type;
+    }
+    
+    @Override
+    public String toString() {
+        return "{\n" +
+                "  \"name\" : \"" + name + "\",\n" +
+                "  \"tableName\" : \"" + tableName + "\",\n" +
+                "  \"fields\" : " + fields + ",\n" +
+                "  \"isAsc\" : " + isAsc + ",\n" +
+                "  \"type\" : \"" + type + "\"\n" +
+                "}\n";
     }
 }

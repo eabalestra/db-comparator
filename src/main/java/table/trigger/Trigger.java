@@ -2,13 +2,15 @@ package table.trigger;
 
 public class Trigger {
     private String name;
-    private String triggerTiming;
+    private String actionTrigger;   // before / after
     private String tableName;
+    private String eventManipulation;   // insert / update / delete
 
-    public Trigger(String name, String triggerTiming, String tableName) {
+    public Trigger(String name, String tableName, String actionTrigger, String eventManipulation) {
         this.name = name;
-        this.triggerTiming = triggerTiming;
         this.tableName = tableName;
+        this.actionTrigger = actionTrigger;
+        this.eventManipulation = eventManipulation;
     }
 
     public void setName(String name) {
@@ -19,12 +21,12 @@ public class Trigger {
         return name;
     }
 
-    public void setTriggerTiming(String triggerTiming) {
-        this.triggerTiming = triggerTiming;
+    public void setactionTrigger(String actionTrigger) {
+        this.actionTrigger = actionTrigger;
     }
 
-    public String getTriggerTiming() {
-        return triggerTiming;
+    public String getactionTrigger() {
+        return actionTrigger;
     }
 
     public void setTableName(String tableName) {
@@ -35,6 +37,14 @@ public class Trigger {
         return tableName;
     }
 
+    public void setEventManipulation(String eventManipulation) {
+        this.eventManipulation = eventManipulation;
+    }
+
+    public String getEventManipulation() {
+        return eventManipulation;
+    }
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -47,16 +57,18 @@ public class Trigger {
         Trigger other = (Trigger) obj;
 
         return name.equals(other.name) &&
-                triggerTiming.equals(other.triggerTiming) &&
+                actionTrigger.equals(other.actionTrigger) &&
+                eventManipulation.equals(other.eventManipulation) &&
                 tableName.equals(other.tableName);
     }
 
     @Override
     public String toString() {
-        return "Trigger{" +
-                "name='" + name + '\'' +
-                ", triggerTiming='" + triggerTiming + '\'' +
-                ", tableName='" + tableName + '\'' +
-                '}';
+        return "{\n" +
+                "  \"name\" : \"" + name + "\",\n" +
+                "  \"actionTrigger\" : \"" + actionTrigger + "\",\n" +
+                "  \"tableName\" : \"" + tableName + "\",\n" +
+                "  \"eventManipulation\" : \"" + eventManipulation + "\"\n" +
+                "}\n";
     }
 }

@@ -48,18 +48,30 @@ public class DatabaseSchemaLoader {
                 List<ForeignKey> fkList = loadForeignKeys(metaData, schema, tableName);
                 table.setForeignKeys(fkList);
 
-                // List<Trigger> triggerList = loadTriggers(metaData, schema, tableName);
-                // table.setTriggers(triggerList);
+                List<Trigger> triggerList = new ArrayList<>();
+                
+                String selectQuery = "SELECT event_object_table, " +
+                        "trigger_name, " +
+                        "event_manipulation, " +
+                        "action_statement, " +
+                        "action_timing " +
+                        "FROM information_schema.triggers " +
+                        "WHERE event_object_table = ? " +
+                        "ORDER BY event_object_table, event_manipulation;";
 
-                String selectQuery = "SELECT event_object_table AS tab_name ,trigger_name FROM information_schema";
-
-                Statement statement = connection.createStatement();
-                ResultSet result = statement.executeQuery(selectQuery);
-                while (result.next()) {
-                    String triggerName = result.getString("TRIGGER_NAME");
-                    System.out.println(triggerName);
+                PreparedStatement statement = connection.prepareStatement(selectQuery);
+                statement.setString(1, tableName);
+                ResultSet resultSetTriggers = statement.executeQuery();
+                while (resultSetTriggers.next()) {
+                    String triggerName = resultSetTriggers.getString("trigger_name");
+                    String eventManipulation = resultSetTriggers.getString("event_manipulation");  // insert, update, delete
+                    String actionTiming = resultSetTriggers.getString("action_timing");
+                    
+                    Trigger newTrigger = new Trigger(triggerName, tableName, actionTiming, eventManipulation);
+                    triggerList.add(newTrigger);
                 }
-
+                table.setTriggers(triggerList);
+        
                 resultDatabase.addTable(table);
             }
         } catch (Exception e) {

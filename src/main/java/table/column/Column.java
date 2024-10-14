@@ -48,10 +48,10 @@ public class Column {
 
     @Override
     public String toString() {
-        return "Column{" +
-                "name='" + name + '\'' +
-                ", type=" + type +
-                '}';
+        return "{" +
+                "\"name\": \"" + name + "\"," +
+                "\"type\": \"" + type + "\"" +
+                "}";
     }
 
 }

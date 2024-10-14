@@ -46,6 +46,8 @@ public class TableComparator {
         for (String tableName : db1TableNames) {
             if (db2TableNames.contains(tableName)) {
                 compareTablesWithSameName(findTableByName(tableName, db1AdditionalTables), findTableByName(tableName, db2AdditionalTables));
+            } else {
+                db1AdditionalTables.add(findTableByName(tableName, db1AdditionalTables));
             }
         }
 
@@ -83,4 +85,4 @@ public class TableComparator {
         return null;
     }
 
-}
+} 
