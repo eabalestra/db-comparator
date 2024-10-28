@@ -25,9 +25,9 @@ public class DatabaseSchemaLoader {
     }
 
     public Database loadDatabaseSchema(DatabaseConnection databaseConnection) {
+        Database database = new Database();
         String schema = databaseConnection.getSchema();
         String[] types = { "TABLE" };
-        Database resultDatabase = new Database();
 
         try {
             Connection connection = databaseConnection.getInstance();
@@ -53,7 +53,7 @@ public class DatabaseSchemaLoader {
                 List<Trigger> triggerList = loadTriggers(connection, tableName);
                 table.setTriggers(triggerList);
 
-                resultDatabase.addTable(table);
+                database.addTable(table);
             } // end while
 
             List<StoredProcedure> proceduresList = new ArrayList<>();
@@ -100,11 +100,11 @@ public class DatabaseSchemaLoader {
                 }
             } // end while
             
-            resultDatabase.setStoredProcedures(proceduresList);
+            database.setStoredProcedures(proceduresList);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return resultDatabase;
+        return database;
     }
 
     private List<Trigger> loadTriggers(Connection connection, String tableName) throws SQLException {

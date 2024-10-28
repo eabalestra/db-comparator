@@ -7,11 +7,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnection {
-    static String url = "";
-    static String username = "";
-    static String password = "";
-    static String schema = "";
-    static Connection connection = null;
+    private String url = "";
+    private String username = "";
+    private String password = "";
+    private String schema = "";
+    private Connection connection = null;
 
     public DatabaseConnection(int databaseNumber) {
         PropertiesLoader loader = new PropertiesLoader("database.properties");
@@ -24,10 +24,9 @@ public class DatabaseConnection {
         System.out.println("URL : " + url);
     }
 
+    // TODO:
     public Connection getInstance() throws SQLException {
-        if (connection == null) {
-            connection = DriverManager.getConnection(url, username, password);
-        }
+        connection = DriverManager.getConnection(url, username, password);
         return connection;
     }
 

@@ -8,6 +8,7 @@ public enum ColumnType {
     TIMESTAMP,
     DATE,
     NUMERIC,
+    TRIGGER,
     SERIAL;
 
     public static ColumnType fromString(String type) {

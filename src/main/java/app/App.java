@@ -2,6 +2,7 @@ package app;
 
 import java.sql.SQLException;
 
+import comparator.TableComparator;
 import dataloader.DatabaseSchemaLoader;
 import db.Database;
 import db.DatabaseConnection;
@@ -21,10 +22,21 @@ public class App {
 
     public void execute() throws SQLException {
         dbLoader = new DatabaseSchemaLoader();
+        // Debug: Print connection details
+        System.out.println("Connecting to Database 1: " + databaseConnectionOne);
+        System.out.println("Connecting to Database 2: " + databaseConnectionTwo);
+        
         databaseOne = dbLoader.loadDatabaseSchema(databaseConnectionOne);
         databaseTwo = dbLoader.loadDatabaseSchema(databaseConnectionTwo);
-        System.out.println(databaseOne);
-        System.out.println(databaseTwo);
+        
+        // Debug: Print loaded schemas
+        System.out.println("Database 1 Schema: " + databaseOne);
+        System.out.println("===================================");
+        System.out.println("Database 2 Schema: " + databaseTwo);
+        
+        TableComparator tableComparator = new TableComparator(databaseOne, databaseTwo);
+        System.out.println("============================================================");
+        tableComparator.compareTables();
     }
 
     private void loadDatabaseDriver() {
