@@ -7,6 +7,7 @@ public enum ColumnType {
     FLOAT8,
     TIMESTAMP,
     DATE,
+    NUMERIC,
     SERIAL;
 
     public static ColumnType fromString(String type) {

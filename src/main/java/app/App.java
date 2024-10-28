@@ -22,8 +22,9 @@ public class App {
     public void execute() throws SQLException {
         dbLoader = new DatabaseSchemaLoader();
         databaseOne = dbLoader.loadDatabaseSchema(databaseConnectionOne);
-        // databaseTwo = dbLoader.loadDatabaseSchema(databaseConnectionTwo);
+        databaseTwo = dbLoader.loadDatabaseSchema(databaseConnectionTwo);
         System.out.println(databaseOne);
+        System.out.println(databaseTwo);
     }
 
     private void loadDatabaseDriver() {
@@ -37,6 +38,6 @@ public class App {
 
     private void initializeConnections() {
         databaseConnectionOne = new DatabaseConnection(1);
-        // databaseConnectionTwo = new DatabaseConnection(2);
+        databaseConnectionTwo = new DatabaseConnection(2);
     }
 }

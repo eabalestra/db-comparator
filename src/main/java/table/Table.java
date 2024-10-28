@@ -124,7 +124,5 @@ public class Table {
                 "  \"primaryKeys\" : " + primaryKeys + ",\n" +
                 "  \"uniqueKeys\" : " + uniqueKeys + "\n" +
                 "}\n";
-    }
-
-    
+    }  
 }

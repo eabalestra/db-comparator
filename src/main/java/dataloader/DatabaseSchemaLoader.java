@@ -5,12 +5,14 @@ import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import db.Database;
 import db.DatabaseConnection;
+import storedprocedure.StoredProcedure;
+import storedprocedure.column.StoredProcedureColumn;
+import storedprocedure.column.StoredProcedureColumnType;
 import table.column.Column;
 import table.column.ColumnType;
 import table.Table;
@@ -48,40 +50,85 @@ public class DatabaseSchemaLoader {
                 List<ForeignKey> fkList = loadForeignKeys(metaData, schema, tableName);
                 table.setForeignKeys(fkList);
 
-                List<Trigger> triggerList = new ArrayList<>();
-                
-                String selectQuery = "SELECT event_object_table, " +
-                        "trigger_name, " +
-                        "event_manipulation, " +
-                        "action_statement, " +
-                        "action_timing " +
-                        "FROM information_schema.triggers " +
-                        "WHERE event_object_table = ? " +
-                        "ORDER BY event_object_table, event_manipulation;";
-
-                PreparedStatement statement = connection.prepareStatement(selectQuery);
-                statement.setString(1, tableName);
-                ResultSet resultSetTriggers = statement.executeQuery();
-                while (resultSetTriggers.next()) {
-                    String triggerName = resultSetTriggers.getString("trigger_name");
-                    String eventManipulation = resultSetTriggers.getString("event_manipulation");  // insert, update, delete
-                    String actionTiming = resultSetTriggers.getString("action_timing");
-                    
-                    Trigger newTrigger = new Trigger(triggerName, tableName, actionTiming, eventManipulation);
-                    triggerList.add(newTrigger);
-                }
+                List<Trigger> triggerList = loadTriggers(connection, tableName);
                 table.setTriggers(triggerList);
-        
+
                 resultDatabase.addTable(table);
-            }
+            } // end while
+
+            List<StoredProcedure> proceduresList = new ArrayList<>();
+            ResultSet resultSet = metaData.getProcedureColumns(null, schema, null, null);
+
+            while (resultSet.next()) {
+                String procedureName = resultSet.getString("PROCEDURE_NAME");
+                String columnName = resultSet.getString("COLUMN_NAME");
+                String columnType = resultSet.getString("TYPE_NAME");
+                String columnOrder = resultSet.getString("ORDINAL_POSITION");
+                int columnTypeCode = resultSet.getInt("COLUMN_TYPE");
+                ColumnType type = ColumnType.fromString(columnType);
+
+                StoredProcedureColumnType parameterType;
+                switch (columnTypeCode) {
+                    case DatabaseMetaData.procedureColumnIn:
+                        parameterType = StoredProcedureColumnType.IN;
+                        break;
+                    case DatabaseMetaData.procedureColumnOut:
+                        parameterType = StoredProcedureColumnType.OUT;
+                        break;
+                    case DatabaseMetaData.procedureColumnInOut:
+                        parameterType = StoredProcedureColumnType.INOUT;
+                        break;
+                    case DatabaseMetaData.procedureColumnReturn:
+                        parameterType = StoredProcedureColumnType.RETURN;
+                        break;
+                    default:
+                        parameterType = StoredProcedureColumnType.UNKNOWN;
+                }
+
+                StoredProcedure existingProcedure = proceduresList.stream()
+                        .filter(proc -> proc.getName().equals(procedureName))
+                        .findFirst()
+                        .orElse(null);
+
+                if (existingProcedure == null) {
+                    StoredProcedure newProcedure = new StoredProcedure(procedureName);
+                    proceduresList.add(newProcedure);
+                } else {
+                    StoredProcedureColumn storedProcedureColumn = new StoredProcedureColumn(parameterType, columnName,
+                            type, columnOrder);
+                    existingProcedure.addColumn(storedProcedureColumn);
+                }
+            } // end while
+            
+            resultDatabase.setStoredProcedures(proceduresList);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         return resultDatabase;
     }
 
-    private List<Trigger> loadTriggers(DatabaseMetaData metaData, String schema, String tableName) throws SQLException {
+    private List<Trigger> loadTriggers(Connection connection, String tableName) throws SQLException {
         List<Trigger> triggerList = new ArrayList<>();
+        String selectQuery = "SELECT event_object_table, " +
+                "trigger_name, " +
+                "event_manipulation, " +
+                "action_statement, " +
+                "action_timing " +
+                "FROM information_schema.triggers " +
+                "WHERE event_object_table = ? " +
+                "ORDER BY event_object_table, event_manipulation;";
+
+        PreparedStatement statement = connection.prepareStatement(selectQuery);
+        statement.setString(1, tableName);
+        ResultSet resultSetTriggers = statement.executeQuery();
+        while (resultSetTriggers.next()) {
+            String triggerName = resultSetTriggers.getString("trigger_name");
+            String eventManipulation = resultSetTriggers.getString("event_manipulation"); // insert, update, delete
+            String actionTiming = resultSetTriggers.getString("action_timing");
+
+            Trigger newTrigger = new Trigger(triggerName, tableName, actionTiming, eventManipulation);
+            triggerList.add(newTrigger);
+        }
         return triggerList;
     }
 
