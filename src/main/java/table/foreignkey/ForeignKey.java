@@ -55,7 +55,7 @@ public class ForeignKey {
 
         ForeignKey other = (ForeignKey) o;
 
-        return name == other.name &&
+        return name.equals(other.name) &&
                tableColumn.equals(other.tableColumn) &&
                referencedTable.equals(other.referencedTable) &&
                referencedColumn.equals(other.referencedColumn);

@@ -89,9 +89,9 @@ public class TableComparator {
      */
     private void compareTablesWithSameName(Table table1, Table table2) {
         //System.out.println("Diferencias entre las tablas " + table1 + " y " + table2);
-        // columnComparator.compareColumns(table1, table2); 
-        // triggerComparator.compareTriggers(table1, table2);  
-        // keysComparator.compareKeys(table1, table2);  TODO
+        columnComparator.compareColumns(table1, table2); 
+        triggerComparator.compareTriggers(table1, table2);  
+        keysComparator.compareKeys(table1, table2);  
         // compareIndexes(table1, table2); TODO
     }	
 } 
