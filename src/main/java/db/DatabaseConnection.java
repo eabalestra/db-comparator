@@ -24,9 +24,10 @@ public class DatabaseConnection {
         System.out.println("URL : " + url);
     }
 
-    // TODO:
     public Connection getInstance() throws SQLException {
-        connection = DriverManager.getConnection(url, username, password);
+        if (connection == null) {
+            connection = DriverManager.getConnection(url, username, password);
+        }
         return connection;
     }
 

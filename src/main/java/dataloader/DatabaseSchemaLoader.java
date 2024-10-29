@@ -54,58 +54,48 @@ public class DatabaseSchemaLoader {
                 table.setTriggers(triggerList);
 
                 database.addTable(table);
-            } // end while
+            }
 
-            List<StoredProcedure> proceduresList = new ArrayList<>();
-            ResultSet resultSet = metaData.getProcedureColumns(null, schema, null, null);
-
-            while (resultSet.next()) {
-                String procedureName = resultSet.getString("PROCEDURE_NAME");
-                String columnName = resultSet.getString("COLUMN_NAME");
-                String columnType = resultSet.getString("TYPE_NAME");
-                String columnOrder = resultSet.getString("ORDINAL_POSITION");
-                int columnTypeCode = resultSet.getInt("COLUMN_TYPE");
-                ColumnType type = ColumnType.fromString(columnType);
-
-                StoredProcedureColumnType parameterType;
-                switch (columnTypeCode) {
-                    case DatabaseMetaData.procedureColumnIn:
-                        parameterType = StoredProcedureColumnType.IN;
-                        break;
-                    case DatabaseMetaData.procedureColumnOut:
-                        parameterType = StoredProcedureColumnType.OUT;
-                        break;
-                    case DatabaseMetaData.procedureColumnInOut:
-                        parameterType = StoredProcedureColumnType.INOUT;
-                        break;
-                    case DatabaseMetaData.procedureColumnReturn:
-                        parameterType = StoredProcedureColumnType.RETURN;
-                        break;
-                    default:
-                        parameterType = StoredProcedureColumnType.UNKNOWN;
-                }
-
-                StoredProcedure existingProcedure = proceduresList.stream()
-                        .filter(proc -> proc.getName().equals(procedureName))
-                        .findFirst()
-                        .orElse(null);
-
-                if (existingProcedure == null) {
-                    StoredProcedure newProcedure = new StoredProcedure(procedureName);
-                    proceduresList.add(newProcedure);
-                } else {
-                    StoredProcedureColumn storedProcedureColumn = new StoredProcedureColumn(parameterType, columnName,
-                            type, columnOrder);
-                    existingProcedure.addColumn(storedProcedureColumn);
-                }
-            } // end while
-            
+            List<StoredProcedure> proceduresList = getStoredProcedures(metaData, schema);
             database.setStoredProcedures(proceduresList);
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         return database;
     }
+
+    private static List<StoredProcedure> getStoredProcedures(DatabaseMetaData metaData, String schema) throws SQLException {
+        List<StoredProcedure> proceduresList = new ArrayList<>();
+        ResultSet resultSet = metaData.getProcedureColumns(null, schema, null, null);
+
+        while (resultSet.next()) {
+            String procedureName = resultSet.getString("PROCEDURE_NAME");
+            String columnName = resultSet.getString("COLUMN_NAME");
+            String columnType = resultSet.getString("TYPE_NAME");
+            String columnOrder = resultSet.getString("ORDINAL_POSITION");
+            int columnTypeCode = resultSet.getInt("COLUMN_TYPE");
+            ColumnType type = ColumnType.fromString(columnType);
+
+            StoredProcedureColumnType parameterType = getStoredProcedureColumnType(columnTypeCode);
+
+            StoredProcedure existingProcedure = proceduresList.stream()
+                    .filter(proc -> proc.getName().equals(procedureName))
+                    .findFirst()
+                    .orElse(null);
+
+            if (existingProcedure == null) {
+                StoredProcedure newProcedure = new StoredProcedure(procedureName);
+                proceduresList.add(newProcedure);
+            } else {
+                StoredProcedureColumn storedProcedureColumn = new StoredProcedureColumn(parameterType, columnName,
+                        type, columnOrder);
+                existingProcedure.addColumn(storedProcedureColumn);
+            }
+        }
+        return proceduresList;
+    }
+
 
     private List<Trigger> loadTriggers(Connection connection, String tableName) throws SQLException {
         List<Trigger> triggerList = new ArrayList<>();
@@ -181,5 +171,26 @@ public class DatabaseSchemaLoader {
             columnLists.add(actualColumn);
         }
         return columnLists;
+    }
+
+    private static StoredProcedureColumnType getStoredProcedureColumnType(int columnTypeCode) {
+        StoredProcedureColumnType parameterType;
+        switch (columnTypeCode) {
+            case DatabaseMetaData.procedureColumnIn:
+                parameterType = StoredProcedureColumnType.IN;
+                break;
+            case DatabaseMetaData.procedureColumnOut:
+                parameterType = StoredProcedureColumnType.OUT;
+                break;
+            case DatabaseMetaData.procedureColumnInOut:
+                parameterType = StoredProcedureColumnType.INOUT;
+                break;
+            case DatabaseMetaData.procedureColumnReturn:
+                parameterType = StoredProcedureColumnType.RETURN;
+                break;
+            default:
+                parameterType = StoredProcedureColumnType.UNKNOWN;
+        }
+        return parameterType;
     }
 }

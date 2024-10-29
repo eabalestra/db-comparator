@@ -11,9 +11,6 @@ public class App {
     private static final String POSTGRES_DRIVER = "org.postgresql.Driver";
     private DatabaseConnection databaseConnectionOne;
     private DatabaseConnection databaseConnectionTwo;
-    private Database databaseOne;
-    private Database databaseTwo;
-    private DatabaseSchemaLoader dbLoader;
 
     public App() {
         loadDatabaseDriver();
@@ -21,21 +18,24 @@ public class App {
     }
 
     public void execute() throws SQLException {
-        dbLoader = new DatabaseSchemaLoader();
-        // Debug: Print connection details
+        DatabaseSchemaLoader dbLoader = new DatabaseSchemaLoader();
+
         System.out.println("Connecting to Database 1: " + databaseConnectionOne);
         System.out.println("Connecting to Database 2: " + databaseConnectionTwo);
-        
-        databaseOne = dbLoader.loadDatabaseSchema(databaseConnectionOne);
-        databaseTwo = dbLoader.loadDatabaseSchema(databaseConnectionTwo);
-        
-        // Debug: Print loaded schemas
+
+        Database databaseOne = dbLoader.loadDatabaseSchema(databaseConnectionOne);
+        databaseOne.setSchema(databaseConnectionOne.getSchema());
+        Database databaseTwo = dbLoader.loadDatabaseSchema(databaseConnectionTwo);
+        databaseTwo.setSchema(databaseConnectionTwo.getSchema());
+
+        System.out.println("===================================");
         System.out.println("Database 1 Schema: " + databaseOne);
         System.out.println("===================================");
         System.out.println("Database 2 Schema: " + databaseTwo);
-        
-        TableComparator tableComparator = new TableComparator(databaseOne, databaseTwo);
         System.out.println("============================================================");
+
+        System.out.println("Comparing tables...");
+        TableComparator tableComparator = new TableComparator(databaseOne, databaseTwo);
         tableComparator.compareTables();
     }
 

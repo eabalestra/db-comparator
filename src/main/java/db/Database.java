@@ -31,10 +31,13 @@ public class Database {
         this.storedProcedures = storedProcedures;
     }
 
+    public void setSchema(String schema) {
+        this.schema = schema;
+    }
+
     @Override
     public String toString() {
         String result = "";
-        result += "Database: " + name + "\n";
         result += "Schema: " + schema + "\n";
         result += "Tables: \n";
         for (Table actualTable : tables) {
