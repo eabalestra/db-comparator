@@ -19,7 +19,11 @@ public class TriggerComparator {
         List<Trigger> table1AdditionalTriggers = findAdditionalTriggers(triggers1, triggers2);
         List<Trigger> table2AdditionalTriggers = findAdditionalTriggers(triggers2, triggers1);
 
-        // Compare triggers with the same name
+        System.out.println();
+        System.out.println("===============================================================================================================");
+        System.out.println("Comparando las tablas: " + table1.getName());
+        System.out.println();
+        
         for (Trigger trigger1 : triggers1) {
             for (Trigger trigger2 : triggers2) {
                 if (trigger1.getName().equals(trigger2.getName())) {
@@ -29,8 +33,8 @@ public class TriggerComparator {
             }
         }
 
-        System.out.println("Triggers adicionales de la tabla " + table1 + " : " + table1AdditionalTriggers);
-        System.out.println("Triggers adicionales de la tabla " + table2 + " : " + table2AdditionalTriggers);
+        System.out.println("Triggers adicionales de la tabla 1" + " : " + table1AdditionalTriggers);
+        System.out.println("Triggers adicionales de la tabla 2" + " : " + table2AdditionalTriggers);
     }
 
     /**

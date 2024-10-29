@@ -19,7 +19,12 @@ public class ColumnComparator {
         
         List<Column> table1AdditionalColumns = findAdditionalColumns(columns1, columns2);
         List<Column> table2AdditionalColumns = findAdditionalColumns(columns2, columns1);
-
+        
+        System.out.println();
+        System.out.println("===============================================================================================================");
+        System.out.println("Comparando las tablas: " + table1.getName());
+        System.out.println();
+        
         // Compare columns with same name
         for (Column column1 : columns1) {
             for (Column column2 : columns2) {
@@ -29,8 +34,8 @@ public class ColumnComparator {
                 }
             }
         }
-        System.out.println("Columnas adicionales de la tabla 1" + table1 + " : " + table1AdditionalColumns);
-        System.out.println("Columnas adicionales de la tabla 2" + table2 + " : " + table2AdditionalColumns);
+        System.out.println("Columnas adicionales de la tabla 1" + " : " + table1AdditionalColumns);
+        System.out.println("Columnas adicionales de la tabla 2" + " : " + table2AdditionalColumns);
     }
 
     /**

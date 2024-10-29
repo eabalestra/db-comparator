@@ -15,6 +15,36 @@ create table Producto (
 	cantidad float not null
 )
 
+create table ItemFactura (
+	cod_producto int not null,
+	nro_factura int not null,
+	nro_cliente INT NOT NULL,
+	cantidad int, 
+	precio float,
+	primary key (cod_producto),
+	foreign key (cod_producto) references Producto(cod_producto) on delete restrict,
+	foreign key (nro_factura) references Factura(nro_factura) on delete cascade,
+	foreign key (nro_cliente) references Cliente(nro_cliente) on delete cascade,
+	UNIQUE (cod_producto, nro_factura)
+)
+
+create table Factura (
+	nro_factura serial not null primary key,
+	nro_cliente int unique,
+	fecha date,
+	monto float,
+	foreign key (nro_cliente) references Cliente(nro_cliente) on delete cascade 
+)
+
+CREATE TABLE Pago (
+    nro_pago SERIAL NOT NULL PRIMARY KEY,
+    nro_factura INT NOT NULL,
+    fecha_pago DATE NOT NULL,
+    monto_pago FLOAT CHECK (monto_pago > 0),
+    metodo_pago VARCHAR(50) NOT NULL,
+    FOREIGN KEY (nro_factura) REFERENCES Factura(nro_factura) ON DELETE CASCADE
+);
+
 CREATE OR REPLACE FUNCTION log_new_cliente() RETURNS TRIGGER AS $$
 BEGIN
     RAISE NOTICE 'New cliente added: % % (nro_cliente: %)', NEW.nombre, NEW.apellido, NEW.nro_cliente;
