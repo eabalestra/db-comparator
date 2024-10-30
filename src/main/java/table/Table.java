@@ -48,7 +48,7 @@ public class Table {
         this.indexes = indexes;
     }
 
-    public List<Index> getIndexs() {
+    public List<Index> getIndexes() {
         return indexes;
     }
 

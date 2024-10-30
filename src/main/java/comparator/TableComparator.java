@@ -15,6 +15,7 @@ public class TableComparator {
     private ColumnComparator columnComparator;
     private TriggerComparator triggerComparator;
     private KeysComparator keysComparator;
+    private IndexComparator indexComparator;
 
     public TableComparator(Database db1, Database db2) {
         this.db1 = db1;
@@ -22,6 +23,7 @@ public class TableComparator {
         columnComparator = new ColumnComparator();
         triggerComparator = new TriggerComparator();
         keysComparator = new KeysComparator();
+        indexComparator = new IndexComparator();
     }
 
     public void setDb1(Database db1) {
@@ -92,6 +94,6 @@ public class TableComparator {
         columnComparator.compareColumns(table1, table2); 
         triggerComparator.compareTriggers(table1, table2);  
         keysComparator.compareKeys(table1, table2);  
-        // compareIndexes(table1, table2); TODO
+        indexComparator.compareIndexes(table1, table2);
     }	
 } 

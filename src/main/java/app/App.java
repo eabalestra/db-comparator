@@ -36,7 +36,7 @@ public class App {
 
         System.out.println("Comparing tables...");
         TableComparator tableComparator = new TableComparator(databaseOne, databaseTwo);
-        // tableComparator.compareTables();
+        tableComparator.compareTables();
     }
 
     private void loadDatabaseDriver() {
