@@ -7,6 +7,10 @@ create table Cliente (
 	dni int
 )
 
+CREATE INDEX idx_cliente_apellido ON Cliente (apellido);
+CREATE INDEX idx_cliente_apellido_nombre ON Cliente (apellido, nombre);
+CREATE INDEX idx_cliente_telefono ON Cliente (telefono);
+
 create table Producto (
 	cod_producto int not null primary key,
 	precio float check (precio > 0),
@@ -14,6 +18,12 @@ create table Producto (
 	stock_maximo int not null,
 	cantidad float not null
 )
+
+CREATE INDEX idx_producto_precio ON Producto (precio);
+CREATE INDEX idx_producto_stock ON Producto (stock_minimo ASC, stock_maximo DESC);
+CREATE INDEX idx_producto_cantidad_desc ON Producto (cantidad DESC);
+
+
 
 create table ItemFactura (
 	cod_producto int not null,
@@ -28,6 +38,7 @@ create table ItemFactura (
 	UNIQUE (cod_producto, nro_factura)
 )
 
+
 create table Factura (
 	nro_factura serial not null primary key,
 	nro_cliente int unique,
@@ -35,6 +46,7 @@ create table Factura (
 	monto float,
 	foreign key (nro_cliente) references Cliente(nro_cliente) on delete cascade 
 )
+
 
 CREATE TABLE Pago (
     nro_pago SERIAL NOT NULL PRIMARY KEY,

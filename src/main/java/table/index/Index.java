@@ -1,23 +1,23 @@
 package table.index;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Index {
     private String name;
     private String tableName;
-    private List<String> fields; // fields of the table the index is defined on.
-    private boolean isAsc; // true if ASC, false if DESC.
+    private Map<String, Boolean> fields = new HashMap<>(); // keys: fields the index is defined on, values: DESC / ASC
     private IndexType type;
 
     public Index(String name, String table) {
         this.name = name;
+        this.tableName = table;
     }
 
-    public Index(String name, String tableName, List<String> fields, boolean isAsc, IndexType type) {
+    public Index(String name, String tableName, Map<String, Boolean> fields, IndexType type) {
         this.name = name;
         this.tableName = tableName;
         this.fields = fields;
-        this.isAsc = isAsc;
         this.type = type;
     }
 
@@ -37,20 +37,12 @@ public class Index {
         this.tableName = tableName;
     }
 
-    public List<String> getFields() {
+    public Map<String, Boolean> getFields() {
         return fields;
     }
 
-    public void setFields(List<String> fields) {
+    public void setFields(Map<String, Boolean> fields) {
         this.fields = fields;
-    }
-
-    public boolean isAsc() {
-        return isAsc;
-    }
-
-    public void setAsc(boolean isAsc) {
-        this.isAsc = isAsc;
     }
 
     public IndexType getType() {
@@ -76,17 +68,15 @@ public class Index {
         return name.equals(other.name) &&
             tableName.equals(other.tableName) &&
             fields.equals(other.fields) &&
-            isAsc == other.isAsc &&
             type == other.type;
     }
-    
+
     @Override
     public String toString() {
         return "{\n" +
                 "  \"name\" : \"" + name + "\",\n" +
                 "  \"tableName\" : \"" + tableName + "\",\n" +
                 "  \"fields\" : " + fields + ",\n" +
-                "  \"isAsc\" : " + isAsc + ",\n" +
                 "  \"type\" : \"" + type + "\"\n" +
                 "}\n";
     }

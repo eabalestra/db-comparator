@@ -6,7 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import db.Database;
 import db.DatabaseConnection;
@@ -17,6 +19,8 @@ import table.column.Column;
 import table.column.ColumnType;
 import table.Table;
 import table.foreignkey.ForeignKey;
+import table.index.Index;
+import table.index.IndexType;
 import table.trigger.Trigger;
 
 public class DatabaseSchemaLoader {
@@ -52,6 +56,9 @@ public class DatabaseSchemaLoader {
 
                 List<Trigger> triggerList = loadTriggers(connection, tableName);
                 table.setTriggers(triggerList);
+
+                List<Index> indexList = loadIndexes(metaData, schema, tableName);
+                table.setIndexes(indexList);
 
                 database.addTable(table);
             }
@@ -173,6 +180,37 @@ public class DatabaseSchemaLoader {
         return columnLists;
     }
 
+    private List<Index> loadIndexes(DatabaseMetaData metaData, String schema, String tableName) throws SQLException {
+        List<Index> indexList = new ArrayList<>();
+        ResultSet resultSetIndexes = metaData.getIndexInfo(null, schema, tableName, false, false);
+    
+        // Map to keep track of index objects by name for grouping columns
+        Map<String, Index> indexMap = new HashMap<>();
+    
+        while (resultSetIndexes.next()) {
+            String indexName = resultSetIndexes.getString("INDEX_NAME");
+            String columnName = resultSetIndexes.getString("COLUMN_NAME");
+            boolean isAsc = !resultSetIndexes.getString("ASC_OR_DESC").equals("D");
+            boolean isUnique = !resultSetIndexes.getBoolean("NON_UNIQUE");
+    
+            Index index = indexMap.get(indexName);
+            if (index == null) {
+                IndexType indexType = isUnique ? IndexType.UNIQUE : IndexType.NORMAL;
+                index = new Index(indexName, tableName);
+                index.setType(indexType);
+                index.getFields().put(columnName, isAsc);
+                indexMap.put(indexName, index); 
+            } else {
+                index.getFields().put(columnName, isAsc);
+            }
+    
+        }
+        indexList.addAll(indexMap.values());
+    
+        return indexList;
+    }
+
+    
     private static StoredProcedureColumnType getStoredProcedureColumnType(int columnTypeCode) {
         StoredProcedureColumnType parameterType;
         switch (columnTypeCode) {

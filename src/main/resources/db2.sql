@@ -5,6 +5,9 @@ create table Cliente (
 	direccion VARCHAR(100) not null, 
 	telefono int
 )
+CREATE INDEX index_cliente_apellido ON Cliente (apellido);
+CREATE INDEX idx_cliente_apellido_nombre ON Cliente (apellido, nombre);
+CREATE UNIQUE INDEX idx_cliente_telefono ON Cliente (telefono);
 
 create table Producto (
 	cod_producto int not null primary key,
@@ -14,6 +17,12 @@ create table Producto (
 	stock_maximo int not null,
 	cantidad int not null
 )
+
+CREATE INDEX idx_producto_descripcion ON Producto (descripcion ASC);
+CREATE INDEX idx_producto_precio ON Producto (precio DESC);
+CREATE INDEX idx_producto_cantidad_desc ON Producto (cantidad);
+CREATE INDEX idx_producto_stock ON Producto (stock_minimo ASC, stock_maximo ASC);
+
 
 create table ItemFactura (
 	cod_producto int not null,
@@ -30,7 +39,7 @@ create table Factura (
 	nro_cliente int,
 	fecha date,
 	monto float,
-	foreign key (nro_cliente) references Cliente(nro_cliente) on delete cascade 
+	foreign key (nro_cliente) references Cliente(nro_cliente) on delete cascade
 )
 
 CREATE OR REPLACE FUNCTION log_new_cliente() RETURNS TRIGGER AS $$
