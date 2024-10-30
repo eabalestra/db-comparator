@@ -4,10 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import logger.Logger;
 import table.Table;
 import table.trigger.Trigger;
 
 public class TriggerComparator {
+
+    private Logger logger;
+
+    public Logger getLogger() {
+        return logger;
+    }
 
     /**
      * Compares triggers between two tables, identifying additional triggers in each.
@@ -16,12 +23,15 @@ public class TriggerComparator {
     public void compareTriggers(Table table1, Table table2) {
         List<Trigger> triggers1 = table1.getTriggers();
         List<Trigger> triggers2 = table2.getTriggers();
+        logger = new Logger();
+
         List<Trigger> table1AdditionalTriggers = findAdditionalTriggers(triggers1, triggers2);
         List<Trigger> table2AdditionalTriggers = findAdditionalTriggers(triggers2, triggers1);
 
         System.out.println();
         System.out.println("===============================================================================================================");
         System.out.println("Comparando las tablas: " + table1.getName());
+        logger.add("Comparando las tablas: " + table1.getName());
         System.out.println();
         
         for (Trigger trigger1 : triggers1) {
@@ -32,7 +42,8 @@ public class TriggerComparator {
                 }
             }
         }
-
+        logger.add("Triggers adicionales de la tabla 1" + " : " + table1AdditionalTriggers);
+        logger.add("Triggers adicionales de la tabla 2" + " : " + table2AdditionalTriggers);
         System.out.println("Triggers adicionales de la tabla 1" + " : " + table1AdditionalTriggers);
         System.out.println("Triggers adicionales de la tabla 2" + " : " + table2AdditionalTriggers);
     }
@@ -45,6 +56,8 @@ public class TriggerComparator {
      */
     private void compareTriggersWithSameName(Trigger trigger1, Trigger trigger2) {
         if (!trigger1.equals(trigger2)) {
+            logger.add("Los triggers " + trigger1.getName() + " tienen diferentes momentos de disparos: " + trigger1.getactionTrigger() + " " +
+              trigger1.getEventManipulation() + ", " + trigger2.getactionTrigger() + " " + trigger2.getEventManipulation());
             System.out.println("Los triggers " + trigger1.getName() + " tienen diferentes momentos de disparos: " + trigger1.getactionTrigger() + " " +
             trigger1.getEventManipulation() + ", " + trigger2.getactionTrigger() + " " + trigger2.getEventManipulation());
         }

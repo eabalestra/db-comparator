@@ -4,11 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import logger.Logger;
 import table.Table;
 import table.foreignkey.ForeignKey;
 
 public class KeysComparator {
-    
+
+    private Logger logger;
+
+    public Logger getLogger() {
+        return logger;
+    }
+
      /**
      * Compares primary, unique, and foreign keys between two tables.
      */
@@ -26,6 +33,8 @@ public class KeysComparator {
     private void compareForeignKeys(Table table1, Table table2) {
         List<ForeignKey> foreignKeys1 = table1.getForeignKeys();
         List<ForeignKey> foreignKeys2 = table2.getForeignKeys();
+        logger = new Logger();
+
 
         List<ForeignKey> table1AdditionalForeignKeys = findAdditionalForeignKeys(foreignKeys1, foreignKeys2);
         List<ForeignKey> table2AdditionalForeignKeys = findAdditionalForeignKeys(foreignKeys2, foreignKeys1);
@@ -33,6 +42,7 @@ public class KeysComparator {
         System.out.println();
         System.out.println("===============================================================================================================");
         System.out.println("Comparando las tablas: " + table1.getName());
+        logger.add("Comparando las tablas: " + table1.getName());
         System.out.println();
 
         // Compare foreign keys with the same name
@@ -44,7 +54,8 @@ public class KeysComparator {
                 }
             }
         }
-
+        logger.add("Foreign Keys adicionales de la tabla 1" + " : " + table1AdditionalForeignKeys);
+        logger.add("Foreign Keys adicionales de la tabla 2" + " : " + table2AdditionalForeignKeys);
         System.out.println("Foreign Keys adicionales de la tabla 1" + " : " + table1AdditionalForeignKeys);
         System.out.println("Foreign Keys adicionales de la tabla 2" + " : " + table2AdditionalForeignKeys);
     }
@@ -71,6 +82,8 @@ public class KeysComparator {
      */
     private void compareForeignKeysWithSameName(ForeignKey foreignKey1, ForeignKey foreignKey2) {
         if (!foreignKey1.equals(foreignKey2)) {
+            logger.add("\nLas foreign keys con nombre : " + foreignKey1.getName() + " son diferentes." +
+              " Foreign key de la tabla 1: " + foreignKey1 + " Foreign key de la tabla 2: " + foreignKey2);
             System.out.println("Las foreign keys con nombre : " + foreignKey1.getName() + " son diferentes." + 
             " Foreign key de la tabla 1: " + foreignKey1 + " Foreign key de la tabla 2: " + foreignKey2);
         }
@@ -90,8 +103,11 @@ public class KeysComparator {
         System.out.println();
         System.out.println("===============================================================================================================");
         System.out.println("Comparando las tablas: " + table1.getName());
+        logger.add("Comparando las tablas: " + table1.getName()+"\n");
         System.out.println();
 
+        logger.add("Primary Keys adicionales de la tabla 1" + " : " + table1AdditionalPrimaryKeys);
+        logger.add("Primary Keys adicionales de la tabla 2" + " : " + table2AdditionalPrimaryKeys);
         System.out.println("Primary Keys adicionales de la tabla 1" + " : " + table1AdditionalPrimaryKeys);
         System.out.println("Primary Keys adicionales de la tabla 2" + " : " + table2AdditionalPrimaryKeys);
     }
@@ -106,8 +122,11 @@ public class KeysComparator {
         System.out.println();
         System.out.println("===============================================================================================================");
         System.out.println("Comparando las tablas: " + table1.getName());
+        logger.add("Comparando las tablas: " + table1.getName()+"\n");
         System.out.println();
 
+        logger.add("Unique Keys adicionales de la tabla 1" + " : " + table1AdditionalUniqueKeys);
+        logger.add("Unique Keys adicionales de la tabla 2" + " : " + table2AdditionalUniqueKeys);
         System.out.println("Unique Keys adicionales de la tabla 1" + " : " + table1AdditionalUniqueKeys);
         System.out.println("Unique Keys adicionales de la tabla 2" + " : " + table2AdditionalUniqueKeys);
     }

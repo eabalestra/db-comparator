@@ -24,6 +24,7 @@ public class TableComparator {
         triggerComparator = new TriggerComparator();
         keysComparator = new KeysComparator();
         indexComparator = new IndexComparator();
+        logger = new Logger();
     }
 
     public void setDb1(Database db1) {
@@ -57,13 +58,19 @@ public class TableComparator {
             for (Table table2 : db2Tables) {
                 if (table1.getName().equals(table2.getName())) {
                     compareTablesWithSameName(table1, table2);
-                    break; 
+                    break;
                 }
             }
         }
 
+        logger.add("===============================================================================================================");
+        logger.add("Tablas adicionales de la base de datos 1: " + db1AdditionalTables);
+        logger.add("\nTablas adicionales de la base de datos 2: " + db2AdditionalTables);
         System.out.println("Tablas adicionales de la base de datos 1: " + db1AdditionalTables);
         System.out.println("Tablas adicionales de la base de datos 2: " + db2AdditionalTables);
+
+        //
+        logger.writeFile();
     }
 
     private List<Table> findAdditionalTables(List<Table> source, List<Table> target) {
@@ -91,9 +98,17 @@ public class TableComparator {
      */
     private void compareTablesWithSameName(Table table1, Table table2) {
         //System.out.println("Diferencias entre las tablas " + table1 + " y " + table2);
-        columnComparator.compareColumns(table1, table2); 
-        triggerComparator.compareTriggers(table1, table2);  
-        keysComparator.compareKeys(table1, table2);  
+        columnComparator.compareColumns(table1, table2);
+        logger.copy(columnComparator.getLogger());
+        //
+        triggerComparator.compareTriggers(table1, table2);
+        logger.copy(triggerComparator.getLogger());
+        //
+        keysComparator.compareKeys(table1, table2);
+        logger.copy(keysComparator.getLogger());
+        //
         indexComparator.compareIndexes(table1, table2);
+        logger.copy(indexComparator.getLogger());
+        //
     }	
 } 

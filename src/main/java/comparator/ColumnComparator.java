@@ -4,11 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import logger.Logger;
 import table.Table;
 import table.column.Column;
 
 public class ColumnComparator {
-    
+
+    private Logger logger;
+
+    public Logger getLogger() {
+        return logger;
+    }
+
     /**
      * Compares columns between two tables, identifying additional columns in each.
      * For columns with the same name, it checks if they have the same type.
@@ -16,6 +23,7 @@ public class ColumnComparator {
     public void compareColumns(Table table1, Table table2) {
         List<Column> columns1 = table1.getColumns();
         List<Column> columns2 = table2.getColumns();
+        logger = new Logger();
         
         List<Column> table1AdditionalColumns = findAdditionalColumns(columns1, columns2);
         List<Column> table2AdditionalColumns = findAdditionalColumns(columns2, columns1);
@@ -23,6 +31,7 @@ public class ColumnComparator {
         System.out.println();
         System.out.println("===============================================================================================================");
         System.out.println("Comparando las tablas: " + table1.getName());
+        logger.add("Comparando las tablas: " + table1.getName());
         System.out.println();
         
         // Compare columns with same name
@@ -34,6 +43,8 @@ public class ColumnComparator {
                 }
             }
         }
+        logger.add("Columnas adicionales de la tabla 1" + " : " + table1AdditionalColumns);
+        logger.add("Columnas adicionales de la tabla 2" + " : " + table2AdditionalColumns);
         System.out.println("Columnas adicionales de la tabla 1" + " : " + table1AdditionalColumns);
         System.out.println("Columnas adicionales de la tabla 2" + " : " + table2AdditionalColumns);
     }
@@ -46,6 +57,7 @@ public class ColumnComparator {
      */
     private void compareColumnsWithSameName(Column column1, Column column2) {
         if (!column1.equals(column2)) {
+            logger.add("Las columnas " + column1.getName() + " tienen tipos diferentes: " + column1.getType() + " y " + column2.getType());
             System.out.println("Las columnas " + column1.getName() + " tienen tipos diferentes: " + column1.getType() + " y " + column2.getType());
         }
     }

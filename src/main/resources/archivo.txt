@@ -1,0 +1,179 @@
+===============================================================================================================
+Comparando las tablas: cliente
+Las columnas telefono tienen tipos diferentes: VARCHAR y INT4
+Columnas adicionales de la tabla 1 : [{"name": "dni","type": "INT4"}]
+Columnas adicionales de la tabla 2 : []
+
+===============================================================================================================
+Comparando las tablas: cliente
+Los triggers after_insert_cliente tienen diferentes momentos de disparos: BEFORE INSERT, AFTER INSERT
+Triggers adicionales de la tabla 1 : []
+Triggers adicionales de la tabla 2 : []
+
+===============================================================================================================
+Comparando las tablas: cliente
+Foreign Keys adicionales de la tabla 1 : []
+Foreign Keys adicionales de la tabla 2 : []
+Comparando las tablas: cliente
+
+Primary Keys adicionales de la tabla 1 : []
+Primary Keys adicionales de la tabla 2 : []
+Comparando las tablas: cliente
+
+Unique Keys adicionales de la tabla 1 : []
+Unique Keys adicionales de la tabla 2 : [telefono]
+
+===============================================================================================================
+Comparando las tablas: cliente
+Los indices idx_cliente_telefono tienen tipos diferentes: NORMAL y UNIQUE
+Indices adicionales de la tabla 1 : [{
+  "name" : "idx_cliente_apellido",
+  "tableName" : "cliente",
+  "fields" : {apellido=true},
+  "type" : "NORMAL"
+}
+]
+
+Indices adicionales de la tabla 2 : [{
+  "name" : "index_cliente_apellido",
+  "tableName" : "cliente",
+  "fields" : {apellido=true},
+  "type" : "NORMAL"
+}
+]
+
+===============================================================================================================
+Comparando las tablas: factura
+Columnas adicionales de la tabla 1 : []
+Columnas adicionales de la tabla 2 : []
+
+===============================================================================================================
+Comparando las tablas: factura
+Triggers adicionales de la tabla 1 : []
+Triggers adicionales de la tabla 2 : []
+
+===============================================================================================================
+Comparando las tablas: factura
+Foreign Keys adicionales de la tabla 1 : []
+Foreign Keys adicionales de la tabla 2 : []
+Comparando las tablas: factura
+
+Primary Keys adicionales de la tabla 1 : []
+Primary Keys adicionales de la tabla 2 : []
+Comparando las tablas: factura
+
+Unique Keys adicionales de la tabla 1 : [nro_cliente]
+Unique Keys adicionales de la tabla 2 : []
+
+===============================================================================================================
+Comparando las tablas: factura
+Indices adicionales de la tabla 1 : [{
+  "name" : "factura_nro_cliente_key",
+  "tableName" : "factura",
+  "fields" : {nro_cliente=true},
+  "type" : "UNIQUE"
+}
+]
+
+Indices adicionales de la tabla 2 : []
+
+===============================================================================================================
+Comparando las tablas: itemfactura
+Columnas adicionales de la tabla 1 : [{"name": "nro_cliente","type": "INT4"}]
+Columnas adicionales de la tabla 2 : []
+
+===============================================================================================================
+Comparando las tablas: itemfactura
+Triggers adicionales de la tabla 1 : []
+Triggers adicionales de la tabla 2 : []
+
+===============================================================================================================
+Comparando las tablas: itemfactura
+Foreign Keys adicionales de la tabla 1 : [ForeignKey{name='itemfactura_nro_cliente_fkey', tableColumn='nro_cliente', referencedTable='cliente', referencedColumn='nro_cliente'}]
+Foreign Keys adicionales de la tabla 2 : []
+Comparando las tablas: itemfactura
+
+Primary Keys adicionales de la tabla 1 : []
+Primary Keys adicionales de la tabla 2 : [nro_factura]
+Comparando las tablas: itemfactura
+
+Unique Keys adicionales de la tabla 1 : []
+Unique Keys adicionales de la tabla 2 : []
+
+===============================================================================================================
+Comparando las tablas: itemfactura
+Los indices itemfactura_pkey tienen fields diferentes: {cod_producto=true} y {nro_factura=true, cod_producto=true}
+Indices adicionales de la tabla 1 : [{
+  "name" : "itemfactura_cod_producto_nro_factura_key",
+  "tableName" : "itemfactura",
+  "fields" : {nro_factura=true, cod_producto=true},
+  "type" : "UNIQUE"
+}
+]
+
+Indices adicionales de la tabla 2 : []
+
+===============================================================================================================
+Comparando las tablas: producto
+Las columnas cantidad tienen tipos diferentes: FLOAT8 y INT4
+Columnas adicionales de la tabla 1 : []
+Columnas adicionales de la tabla 2 : [{"name": "descripcion","type": "VARCHAR"}]
+
+===============================================================================================================
+Comparando las tablas: producto
+Triggers adicionales de la tabla 1 : []
+Triggers adicionales de la tabla 2 : [{
+  "name" : "after_update_cantidad",
+  "actionTrigger" : "AFTER",
+  "tableName" : "producto",
+  "eventManipulation" : "UPDATE"
+}
+]
+
+===============================================================================================================
+Comparando las tablas: producto
+Foreign Keys adicionales de la tabla 1 : []
+Foreign Keys adicionales de la tabla 2 : []
+Comparando las tablas: producto
+
+Primary Keys adicionales de la tabla 1 : []
+Primary Keys adicionales de la tabla 2 : []
+Comparando las tablas: producto
+
+Unique Keys adicionales de la tabla 1 : []
+Unique Keys adicionales de la tabla 2 : []
+
+===============================================================================================================
+Comparando las tablas: producto
+Los indices idx_producto_stock tienen fields diferentes: {stock_minimo=true, stock_maximo=false} y {stock_minimo=true, stock_maximo=true}
+Los indices idx_producto_cantidad_desc tienen fields diferentes: {cantidad=false} y {cantidad=true}
+Los indices idx_producto_precio tienen fields diferentes: {precio=true} y {precio=false}
+Indices adicionales de la tabla 1 : []
+
+Indices adicionales de la tabla 2 : [{
+  "name" : "idx_producto_descripcion",
+  "tableName" : "producto",
+  "fields" : {descripcion=true},
+  "type" : "NORMAL"
+}
+]
+
+===============================================================================================================
+Tablas adicionales de la base de datos 1: [{
+  "name" : "pago",
+  "columns" : [{"name": "nro_pago","type": "SERIAL"}, {"name": "nro_factura","type": "INT4"}, {"name": "fecha_pago","type": "DATE"}, {"name": "monto_pago","type": "FLOAT8"}, {"name": "metodo_pago","type": "VARCHAR"}],
+  "triggers" : [],
+  "indexes" : [{
+  "name" : "pago_pkey",
+  "tableName" : "pago",
+  "fields" : {nro_pago=true},
+  "type" : "UNIQUE"
+}
+],
+  "foreignKeys" : [ForeignKey{name='pago_nro_factura_fkey', tableColumn='nro_factura', referencedTable='factura', referencedColumn='nro_factura'}],
+  "primaryKeys" : [nro_pago],
+  "uniqueKeys" : [nro_pago]
+}
+]
+
+Tablas adicionales de la base de datos 2: []
