@@ -34,7 +34,7 @@ public class Logger {
     }
 
     public void writeFile(String fileName) {
-        String rutaDirectorio = "src/main/resources/"; // Directorio dentro de resources
+        String rutaDirectorio = "src/main/resources/files"; // Directorio dentro de resources
         String nombreArchivo = fileName + ".txt";
         String contenido = file;
 
