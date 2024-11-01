@@ -55,7 +55,7 @@ public class KeysComparator {
             }
         }
         logger.add("Foreign Keys adicionales de la tabla 1" + " : " + table1AdditionalForeignKeys);
-        logger.add("Foreign Keys adicionales de la tabla 2" + " : " + table2AdditionalForeignKeys);
+        logger.add("Foreign Keys adicionales de la tabla 2" + " : " + table2AdditionalForeignKeys+"\n");
         System.out.println("Foreign Keys adicionales de la tabla 1" + " : " + table1AdditionalForeignKeys);
         System.out.println("Foreign Keys adicionales de la tabla 2" + " : " + table2AdditionalForeignKeys);
     }
@@ -103,11 +103,12 @@ public class KeysComparator {
         System.out.println();
         System.out.println("===============================================================================================================");
         System.out.println("Comparando las tablas: " + table1.getName());
-        logger.add("Comparando las tablas: " + table1.getName()+"\n");
+        logger.add("===============================================================================================================");
+        logger.add("Comparando las tablas: " + table1.getName());
         System.out.println();
 
         logger.add("Primary Keys adicionales de la tabla 1" + " : " + table1AdditionalPrimaryKeys);
-        logger.add("Primary Keys adicionales de la tabla 2" + " : " + table2AdditionalPrimaryKeys);
+        logger.add("Primary Keys adicionales de la tabla 2" + " : " + table2AdditionalPrimaryKeys+"\n");
         System.out.println("Primary Keys adicionales de la tabla 1" + " : " + table1AdditionalPrimaryKeys);
         System.out.println("Primary Keys adicionales de la tabla 2" + " : " + table2AdditionalPrimaryKeys);
     }
@@ -122,7 +123,8 @@ public class KeysComparator {
         System.out.println();
         System.out.println("===============================================================================================================");
         System.out.println("Comparando las tablas: " + table1.getName());
-        logger.add("Comparando las tablas: " + table1.getName()+"\n");
+        logger.add("===============================================================================================================");
+        logger.add("Comparando las tablas: " + table1.getName());
         System.out.println();
 
         logger.add("Unique Keys adicionales de la tabla 1" + " : " + table1AdditionalUniqueKeys);

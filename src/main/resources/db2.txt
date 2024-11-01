@@ -1,0 +1,124 @@
+Schema: public
+Tables: 
+{
+  "name" : "cliente",
+  "columns" : [{"name": "nro_cliente","type": "INT4"}, {"name": "apellido","type": "VARCHAR"}, {"name": "nombre","type": "VARCHAR"}, {"name": "direccion","type": "VARCHAR"}, {"name": "telefono","type": "INT4"}],
+  "triggers" : [{
+  "name" : "after_insert_cliente",
+  "actionTrigger" : "AFTER",
+  "tableName" : "cliente",
+  "eventManipulation" : "INSERT"
+}
+],
+  "indexes" : [{
+  "name" : "index_cliente_apellido",
+  "tableName" : "cliente",
+  "fields" : {apellido=true},
+  "type" : "NORMAL"
+}
+, {
+  "name" : "idx_cliente_telefono",
+  "tableName" : "cliente",
+  "fields" : {telefono=true},
+  "type" : "UNIQUE"
+}
+, {
+  "name" : "cliente_pkey",
+  "tableName" : "cliente",
+  "fields" : {nro_cliente=true},
+  "type" : "UNIQUE"
+}
+, {
+  "name" : "idx_cliente_apellido_nombre",
+  "tableName" : "cliente",
+  "fields" : {apellido=true, nombre=true},
+  "type" : "NORMAL"
+}
+],
+  "foreignKeys" : [],
+  "primaryKeys" : [nro_cliente],
+  "uniqueKeys" : [nro_cliente, telefono]
+}
+
+{
+  "name" : "factura",
+  "columns" : [{"name": "nro_factura","type": "SERIAL"}, {"name": "nro_cliente","type": "INT4"}, {"name": "fecha","type": "DATE"}, {"name": "monto","type": "FLOAT8"}],
+  "triggers" : [],
+  "indexes" : [{
+  "name" : "factura_pkey",
+  "tableName" : "factura",
+  "fields" : {nro_factura=true},
+  "type" : "UNIQUE"
+}
+],
+  "foreignKeys" : [ForeignKey{name='factura_nro_cliente_fkey', tableColumn='nro_cliente', referencedTable='cliente', referencedColumn='nro_cliente'}],
+  "primaryKeys" : [nro_factura],
+  "uniqueKeys" : [nro_factura]
+}
+
+{
+  "name" : "itemfactura",
+  "columns" : [{"name": "cod_producto","type": "INT4"}, {"name": "nro_factura","type": "INT4"}, {"name": "cantidad","type": "INT4"}, {"name": "precio","type": "FLOAT8"}],
+  "triggers" : [],
+  "indexes" : [{
+  "name" : "itemfactura_pkey",
+  "tableName" : "itemfactura",
+  "fields" : {nro_factura=true, cod_producto=true},
+  "type" : "UNIQUE"
+}
+],
+  "foreignKeys" : [ForeignKey{name='itemfactura_nro_factura_fkey', tableColumn='nro_factura', referencedTable='factura', referencedColumn='nro_factura'}, ForeignKey{name='itemfactura_cod_producto_fkey', tableColumn='cod_producto', referencedTable='producto', referencedColumn='cod_producto'}],
+  "primaryKeys" : [cod_producto, nro_factura],
+  "uniqueKeys" : [cod_producto, nro_factura]
+}
+
+{
+  "name" : "producto",
+  "columns" : [{"name": "cod_producto","type": "INT4"}, {"name": "descripcion","type": "VARCHAR"}, {"name": "precio","type": "FLOAT8"}, {"name": "stock_minimo","type": "INT4"}, {"name": "stock_maximo","type": "INT4"}, {"name": "cantidad","type": "INT4"}],
+  "triggers" : [{
+  "name" : "after_update_cantidad",
+  "actionTrigger" : "AFTER",
+  "tableName" : "producto",
+  "eventManipulation" : "UPDATE"
+}
+],
+  "indexes" : [{
+  "name" : "producto_pkey",
+  "tableName" : "producto",
+  "fields" : {cod_producto=true},
+  "type" : "UNIQUE"
+}
+, {
+  "name" : "idx_producto_descripcion",
+  "tableName" : "producto",
+  "fields" : {descripcion=true},
+  "type" : "NORMAL"
+}
+, {
+  "name" : "idx_producto_stock",
+  "tableName" : "producto",
+  "fields" : {stock_minimo=true, stock_maximo=true},
+  "type" : "NORMAL"
+}
+, {
+  "name" : "idx_producto_cantidad_desc",
+  "tableName" : "producto",
+  "fields" : {cantidad=true},
+  "type" : "NORMAL"
+}
+, {
+  "name" : "idx_producto_precio",
+  "tableName" : "producto",
+  "fields" : {precio=false},
+  "type" : "NORMAL"
+}
+],
+  "foreignKeys" : [],
+  "primaryKeys" : [cod_producto],
+  "uniqueKeys" : [cod_producto]
+}
+
+Stored Procedures: 
+StoredProcedure{name='check_stock_level', columns=[]}
+StoredProcedure{name='log_new_cliente', columns=[]}
+
