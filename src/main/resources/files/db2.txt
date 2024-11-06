@@ -55,6 +55,7 @@ Tables:
 }
 
 Stored Procedures: 
-StoredProcedure{name='contar_partidos_equipo', columns=[StoredProcedureColumn [columnName=p_id_equipo, columnOrder=1, parameterType=IN, type=INT4]]}
-StoredProcedure{name='registrar_partido_con_arbitro', columns=[StoredProcedureColumn [columnName=p_equipo_local, columnOrder=1, parameterType=IN, type=INT4], StoredProcedureColumn [columnName=p_equipo_visitante, columnOrder=2, parameterType=IN, type=INT4], StoredProcedureColumn [columnName=p_fecha, columnOrder=3, parameterType=IN, type=DATE], StoredProcedureColumn [columnName=p_arbitro, columnOrder=4, parameterType=IN, type=VARCHAR]]}
+StoredProcedure{name='contar_partidos_equipo', columns=[StoredProcedureColumn [columnName=returnValue, columnOrder=0, parameterType=RETURN, type=INT4], StoredProcedureColumn [columnName=p_id_equipo, columnOrder=1, parameterType=IN, type=INT4]]}
+StoredProcedure{name='prueba2', columns=[StoredProcedureColumn [columnName=hola, columnOrder=1, parameterType=OUT, type=VARCHAR], StoredProcedureColumn [columnName=chau, columnOrder=2, parameterType=INOUT, type=INT4], StoredProcedureColumn [columnName=pepe, columnOrder=3, parameterType=IN, type=DATE], StoredProcedureColumn [columnName=silla, columnOrder=4, parameterType=INOUT, type=VARCHAR]]}
+StoredProcedure{name='registrar_partido', columns=[StoredProcedureColumn [columnName=returnValue, columnOrder=0, parameterType=RETURN, type=VOID], StoredProcedureColumn [columnName=p_equipo_local, columnOrder=1, parameterType=IN, type=INT4], StoredProcedureColumn [columnName=p_equipo_visitante, columnOrder=2, parameterType=IN, type=INT4], StoredProcedureColumn [columnName=p_fecha, columnOrder=3, parameterType=IN, type=DATE], StoredProcedureColumn [columnName=p_arbitro, columnOrder=4, parameterType=IN, type=VARCHAR]]}
 

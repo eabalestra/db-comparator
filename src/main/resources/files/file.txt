@@ -1,32 +1,28 @@
-===============================================================================================================
-Comparando las tablas: equipo
-Columnas adicionales de la tabla 1 : []
-Columnas adicionales de la tabla 2 : [{"name": "entrenador","type": "VARCHAR"}]
 
-===============================================================================================================
-Comparando las tablas: equipo
-Triggers adicionales de la tabla 1 : []
-Triggers adicionales de la tabla 2 : []
+============== Diferencias entre las tablas con nombre: 'equipo' ============== 
 
-===============================================================================================================
-Comparando las tablas: equipo
-Foreign Keys adicionales de la tabla 1 : []
-Foreign Keys adicionales de la tabla 2 : []
+--- Diferencias entre columnas: ---
+  Columnas adicionales de la tabla 1 : []
+  Columnas adicionales de la tabla 2 : [{"name": "entrenador","type": "VARCHAR"}]
 
-===============================================================================================================
-Comparando las tablas: equipo
-Primary Keys adicionales de la tabla 1 : []
-Primary Keys adicionales de la tabla 2 : []
+--- Diferencias entre los triggers: ---
+  Triggers adicionales de la tabla 1 : []
+  Triggers adicionales de la tabla 2 : []
 
-===============================================================================================================
-Comparando las tablas: equipo
-Unique Keys adicionales de la tabla 1 : []
-Unique Keys adicionales de la tabla 2 : []
+--- Diferencias entre las claves foráneas: ---
+  Foreign Keys adicionales de la tabla 1 : []
+  Foreign Keys adicionales de la tabla 2 : []
 
-===============================================================================================================
-Comparando las tablas: equipo
+--- Diferencias entre las claves primarias: ---
+  Primary Keys adicionales de la tabla 1 : []
+  Primary Keys adicionales de la tabla 2 : []
+
+--- Diferencias entre las claves únicas: ---
+  Unique Keys adicionales de la tabla 1 : []
+  Unique Keys adicionales de la tabla 2 : []
+
+--- Diferencias entre los índices: ---
 Indices adicionales de la tabla 1 : []
-
 Indices adicionales de la tabla 2 : [{
   "name" : "idx_equipo_ciudad",
   "tableName" : "equipo",
@@ -35,33 +31,30 @@ Indices adicionales de la tabla 2 : [{
 }
 ]
 
-===============================================================================================================
-Comparando las tablas: jugador
-Columnas adicionales de la tabla 1 : []
-Columnas adicionales de la tabla 2 : [{"name": "nacionalidad","type": "VARCHAR"}]
 
-===============================================================================================================
-Comparando las tablas: jugador
-Triggers adicionales de la tabla 1 : []
-Triggers adicionales de la tabla 2 : []
+============== Diferencias entre las tablas con nombre: 'jugador' ============== 
 
-===============================================================================================================
-Comparando las tablas: jugador
-Foreign Keys adicionales de la tabla 1 : []
-Foreign Keys adicionales de la tabla 2 : []
+--- Diferencias entre columnas: ---
+  Columnas adicionales de la tabla 1 : []
+  Columnas adicionales de la tabla 2 : [{"name": "nacionalidad","type": "VARCHAR"}]
 
-===============================================================================================================
-Comparando las tablas: jugador
-Primary Keys adicionales de la tabla 1 : []
-Primary Keys adicionales de la tabla 2 : []
+--- Diferencias entre los triggers: ---
+  Triggers adicionales de la tabla 1 : []
+  Triggers adicionales de la tabla 2 : []
 
-===============================================================================================================
-Comparando las tablas: jugador
-Unique Keys adicionales de la tabla 1 : []
-Unique Keys adicionales de la tabla 2 : []
+--- Diferencias entre las claves foráneas: ---
+  Foreign Keys adicionales de la tabla 1 : []
+  Foreign Keys adicionales de la tabla 2 : []
 
-===============================================================================================================
-Comparando las tablas: jugador
+--- Diferencias entre las claves primarias: ---
+  Primary Keys adicionales de la tabla 1 : []
+  Primary Keys adicionales de la tabla 2 : []
+
+--- Diferencias entre las claves únicas: ---
+  Unique Keys adicionales de la tabla 1 : []
+  Unique Keys adicionales de la tabla 2 : []
+
+--- Diferencias entre los índices: ---
 Indices adicionales de la tabla 1 : [{
   "name" : "idx_jugador_posicion",
   "tableName" : "jugador",
@@ -69,41 +62,35 @@ Indices adicionales de la tabla 1 : [{
   "type" : "NORMAL"
 }
 ]
-
 Indices adicionales de la tabla 2 : []
 
-===============================================================================================================
-Comparando las tablas: partido
-Columnas adicionales de la tabla 1 : []
-Columnas adicionales de la tabla 2 : [{"name": "arbitro","type": "VARCHAR"}]
 
-===============================================================================================================
-Comparando las tablas: partido
-Triggers adicionales de la tabla 1 : []
-Triggers adicionales de la tabla 2 : []
+============== Diferencias entre las tablas con nombre: 'partido' ============== 
 
-===============================================================================================================
-Comparando las tablas: partido
-Foreign Keys adicionales de la tabla 1 : []
-Foreign Keys adicionales de la tabla 2 : []
+--- Diferencias entre columnas: ---
+  Columnas adicionales de la tabla 1 : []
+  Columnas adicionales de la tabla 2 : [{"name": "arbitro","type": "VARCHAR"}]
 
-===============================================================================================================
-Comparando las tablas: partido
-Primary Keys adicionales de la tabla 1 : []
-Primary Keys adicionales de la tabla 2 : []
+--- Diferencias entre los triggers: ---
+  Triggers adicionales de la tabla 1 : []
+  Triggers adicionales de la tabla 2 : []
 
-===============================================================================================================
-Comparando las tablas: partido
-Unique Keys adicionales de la tabla 1 : []
-Unique Keys adicionales de la tabla 2 : []
+--- Diferencias entre las claves foráneas: ---
+  Foreign Keys adicionales de la tabla 1 : []
+  Foreign Keys adicionales de la tabla 2 : []
 
-===============================================================================================================
-Comparando las tablas: partido
+--- Diferencias entre las claves primarias: ---
+  Primary Keys adicionales de la tabla 1 : []
+  Primary Keys adicionales de la tabla 2 : []
+
+--- Diferencias entre las claves únicas: ---
+  Unique Keys adicionales de la tabla 1 : []
+  Unique Keys adicionales de la tabla 2 : []
+
+--- Diferencias entre los índices: ---
 Indices adicionales de la tabla 1 : []
-
 Indices adicionales de la tabla 2 : []
 
-===============================================================================================================
 Tablas adicionales de la base de datos 1: []
 
 Tablas adicionales de la base de datos 2: []

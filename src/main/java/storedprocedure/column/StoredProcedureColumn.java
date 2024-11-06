@@ -11,11 +11,15 @@ public class StoredProcedureColumn {
     ColumnType columnType;
     String columnOrder;
 
-    public StoredProcedureColumn(StoredProcedureColumnType parameterType, String columnName, ColumnType type, String columnOrder) {
+    public StoredProcedureColumn(StoredProcedureColumnType parameterType, String columnName, ColumnType columnType, String columnOrder) {
         this.parameterType = parameterType;
         this.columnName = columnName;
-        this.columnType = type;
+        this.columnType = columnType;
         this.columnOrder = columnOrder;
+    }
+
+    public String getColumnOrder() {
+        return columnOrder;
     }
 
     @Override
@@ -34,8 +38,6 @@ public class StoredProcedureColumn {
         StoredProcedureColumn that = (StoredProcedureColumn) o;
 
         if (parameterType != that.parameterType)
-            return false;
-        if (!columnName.equals(that.columnName))
             return false;
         if (columnType != that.columnType)
             return false;

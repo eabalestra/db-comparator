@@ -52,7 +52,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Procedimiento para registrar un partido con árbitro
-CREATE OR REPLACE PROCEDURE registrar_partido_con_arbitro(
+CREATE OR REPLACE PROCEDURE registrar_partido(
     p_equipo_local INT,
     p_equipo_visitante INT,
     p_fecha DATE,

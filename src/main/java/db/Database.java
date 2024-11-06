@@ -19,12 +19,20 @@ public class Database {
         storedProcedures = new ArrayList<>();
     }
 
+    public String getName() {
+        return name;
+    }
+    
     public List<Table> getTables() {
         return tables;
     }
     
     public void addTable(Table table) {
         tables.add(table);
+    }
+
+    public List<StoredProcedure> getStoredProcedures() {
+        return storedProcedures;
     }
 
     public void setStoredProcedures(List<StoredProcedure> storedProcedures) {

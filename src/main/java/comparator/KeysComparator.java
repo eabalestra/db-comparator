@@ -39,13 +39,8 @@ public class KeysComparator {
         List<ForeignKey> table1AdditionalForeignKeys = findAdditionalForeignKeys(foreignKeys1, foreignKeys2);
         List<ForeignKey> table2AdditionalForeignKeys = findAdditionalForeignKeys(foreignKeys2, foreignKeys1);
 
-        System.out.println();
-        System.out.println("===============================================================================================================");
-        System.out.println("Comparando las tablas: " + table1.getName());
-        logger.add("Comparando las tablas: " + table1.getName());
-        System.out.println();
+        logger.add("--- Diferencias entre las claves foráneas: ---");
 
-        // Compare foreign keys with the same name
         for (ForeignKey foreignKey1 : foreignKeys1) {
             for (ForeignKey foreignKey2 : foreignKeys2) {
                 if (foreignKey1.getName().equals(foreignKey2.getName())) {
@@ -54,10 +49,8 @@ public class KeysComparator {
                 }
             }
         }
-        logger.add("Foreign Keys adicionales de la tabla 1" + " : " + table1AdditionalForeignKeys);
-        logger.add("Foreign Keys adicionales de la tabla 2" + " : " + table2AdditionalForeignKeys+"\n");
-        System.out.println("Foreign Keys adicionales de la tabla 1" + " : " + table1AdditionalForeignKeys);
-        System.out.println("Foreign Keys adicionales de la tabla 2" + " : " + table2AdditionalForeignKeys);
+        logger.add("  Foreign Keys adicionales de la tabla 1" + " : " + table1AdditionalForeignKeys);
+        logger.add("  Foreign Keys adicionales de la tabla 2" + " : " + table2AdditionalForeignKeys + "\n");
     }
 
     private List<ForeignKey> findAdditionalForeignKeys(List<ForeignKey> source, List<ForeignKey> target) {
@@ -82,10 +75,8 @@ public class KeysComparator {
      */
     private void compareForeignKeysWithSameName(ForeignKey foreignKey1, ForeignKey foreignKey2) {
         if (!foreignKey1.equals(foreignKey2)) {
-            logger.add("\nLas foreign keys con nombre : " + foreignKey1.getName() + " son diferentes." +
+            logger.add("\n  Las foreign keys con nombre : '" + foreignKey1.getName() + "' son diferentes." +
               " Foreign key de la tabla 1: " + foreignKey1 + " Foreign key de la tabla 2: " + foreignKey2);
-            System.out.println("Las foreign keys con nombre : " + foreignKey1.getName() + " son diferentes." + 
-            " Foreign key de la tabla 1: " + foreignKey1 + " Foreign key de la tabla 2: " + foreignKey2);
         }
     }
 
@@ -100,17 +91,10 @@ public class KeysComparator {
         List<String> table1AdditionalPrimaryKeys = findAdditionalElements(primaryKeys1, primaryKeys2);
         List<String> table2AdditionalPrimaryKeys = findAdditionalElements(primaryKeys2, primaryKeys1);
 
-        System.out.println();
-        System.out.println("===============================================================================================================");
-        System.out.println("Comparando las tablas: " + table1.getName());
-        logger.add("===============================================================================================================");
-        logger.add("Comparando las tablas: " + table1.getName());
-        System.out.println();
+        logger.add("--- Diferencias entre las claves primarias: ---");
 
-        logger.add("Primary Keys adicionales de la tabla 1" + " : " + table1AdditionalPrimaryKeys);
-        logger.add("Primary Keys adicionales de la tabla 2" + " : " + table2AdditionalPrimaryKeys+"\n");
-        System.out.println("Primary Keys adicionales de la tabla 1" + " : " + table1AdditionalPrimaryKeys);
-        System.out.println("Primary Keys adicionales de la tabla 2" + " : " + table2AdditionalPrimaryKeys);
+        logger.add("  Primary Keys adicionales de la tabla 1" + " : " + table1AdditionalPrimaryKeys);
+        logger.add("  Primary Keys adicionales de la tabla 2" + " : " + table2AdditionalPrimaryKeys+"\n");
     }
 
 
@@ -120,17 +104,10 @@ public class KeysComparator {
         List<String> table1AdditionalUniqueKeys = findAdditionalElements(uniqueKeys1, uniqueKeys2);
         List<String> table2AdditionalUniqueKeys = findAdditionalElements(uniqueKeys2, uniqueKeys1);
 
-        System.out.println();
-        System.out.println("===============================================================================================================");
-        System.out.println("Comparando las tablas: " + table1.getName());
-        logger.add("===============================================================================================================");
-        logger.add("Comparando las tablas: " + table1.getName());
-        System.out.println();
+        logger.add("--- Diferencias entre las claves únicas: ---");
 
-        logger.add("Unique Keys adicionales de la tabla 1" + " : " + table1AdditionalUniqueKeys);
-        logger.add("Unique Keys adicionales de la tabla 2" + " : " + table2AdditionalUniqueKeys);
-        System.out.println("Unique Keys adicionales de la tabla 1" + " : " + table1AdditionalUniqueKeys);
-        System.out.println("Unique Keys adicionales de la tabla 2" + " : " + table2AdditionalUniqueKeys);
+        logger.add("  Unique Keys adicionales de la tabla 1" + " : " + table1AdditionalUniqueKeys);
+        logger.add("  Unique Keys adicionales de la tabla 2" + " : " + table2AdditionalUniqueKeys);
     }
 
     private List<String> findAdditionalElements(List<String> source, List<String> target) {

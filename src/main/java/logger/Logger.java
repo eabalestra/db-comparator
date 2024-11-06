@@ -29,7 +29,6 @@ public class Logger {
     //
 
     public void copy(Logger other) {
-        this.file += "===============================================================================================================\n";
         this.file += other.get() + "\n";
     }
 

@@ -55,6 +55,7 @@ Tables:
 }
 
 Stored Procedures: 
-StoredProcedure{name='calcular_edad_jugador', columns=[StoredProcedureColumn [columnName=p_id_jugador, columnOrder=1, parameterType=IN, type=INT4]]}
-StoredProcedure{name='registrar_partido', columns=[StoredProcedureColumn [columnName=p_equipo_local, columnOrder=1, parameterType=IN, type=INT4], StoredProcedureColumn [columnName=p_equipo_visitante, columnOrder=2, parameterType=IN, type=INT4], StoredProcedureColumn [columnName=p_fecha, columnOrder=3, parameterType=IN, type=DATE]]}
+StoredProcedure{name='calcular_edad_jugador', columns=[StoredProcedureColumn [columnName=returnValue, columnOrder=0, parameterType=RETURN, type=INT4], StoredProcedureColumn [columnName=p_id_jugador, columnOrder=1, parameterType=IN, type=INT4]]}
+StoredProcedure{name='prueba2', columns=[StoredProcedureColumn [columnName=hola, columnOrder=1, parameterType=OUT, type=INT4], StoredProcedureColumn [columnName=chau, columnOrder=2, parameterType=IN, type=INT4], StoredProcedureColumn [columnName=pepe, columnOrder=3, parameterType=IN, type=DATE], StoredProcedureColumn [columnName=silla, columnOrder=4, parameterType=IN, type=VARCHAR]]}
+StoredProcedure{name='registrar_partido', columns=[StoredProcedureColumn [columnName=returnValue, columnOrder=0, parameterType=RETURN, type=VOID], StoredProcedureColumn [columnName=p_equipo_local, columnOrder=1, parameterType=IN, type=INT4], StoredProcedureColumn [columnName=p_equipo_visitante, columnOrder=2, parameterType=IN, type=INT4], StoredProcedureColumn [columnName=p_fecha, columnOrder=3, parameterType=IN, type=DATE]]}
 

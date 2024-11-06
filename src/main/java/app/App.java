@@ -3,9 +3,11 @@ package app;
 import java.sql.SQLException;
 
 import comparator.TableComparator;
+import comparator.storedprocedure.StoredProcedureComparator;
 import dataloader.DatabaseSchemaLoader;
 import db.Database;
 import db.DatabaseConnection;
+import logger.Logger;
 
 public class App {
     private static final String POSTGRES_DRIVER = "org.postgresql.Driver";
@@ -27,16 +29,11 @@ public class App {
         databaseOne.setSchema(databaseConnectionOne.getSchema());
         Database databaseTwo = dbLoader.loadDatabaseSchema(databaseConnectionTwo);
         databaseTwo.setSchema(databaseConnectionTwo.getSchema());
-
-        System.out.println("===================================");
-        System.out.println("Database 1 Schema: " + databaseOne);
-        System.out.println("===================================");
-        System.out.println("Database 2 Schema: " + databaseTwo);
-        System.out.println("============================================================");
-
-        System.out.println("Comparing tables...");
+        
         TableComparator tableComparator = new TableComparator(databaseOne, databaseTwo);
         tableComparator.compareTables();
+        StoredProcedureComparator storedProcedureComparator = new StoredProcedureComparator(databaseOne, databaseTwo, new Logger());
+        storedProcedureComparator.compareStoredProcedures();
     }
 
     private void loadDatabaseDriver() {

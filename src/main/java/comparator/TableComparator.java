@@ -47,9 +47,10 @@ public class TableComparator {
         return db2;
     }
 
-     /**
+    /**
      * Compares tables between two databases, `db1` and `db2`.
-     * Identifies additional tables in each database and calls a method to compare tables with the same name.
+     * Identifies additional tables in each database and calls a method to compare
+     * tables with the same name.
      */
     public void compareTables() {
         List<Table> db1Tables = db1.getTables();
@@ -69,12 +70,8 @@ public class TableComparator {
             }
         }
 
-        logger.add("===============================================================================================================");
         logger.add("Tablas adicionales de la base de datos 1: " + db1AdditionalTables);
         logger.add("\nTablas adicionales de la base de datos 2: " + db2AdditionalTables);
-        System.out.println("Tablas adicionales de la base de datos 1: " + db1AdditionalTables);
-        System.out.println("Tablas adicionales de la base de datos 2: " + db2AdditionalTables);
-
         //
         loggerDb1.writeFile("db1");
         loggerDb2.writeFile("db2");
@@ -87,8 +84,8 @@ public class TableComparator {
 
         // Extract the names of tables in the target list for comparison
         List<String> targetTableNames = target.stream()
-                                            .map(Table::getName)
-                                            .collect(Collectors.toList());
+                .map(Table::getName)
+                .collect(Collectors.toList());
 
         for (Table element : source) {
             // Compare based on table names
@@ -106,18 +103,18 @@ public class TableComparator {
      * @param table2 the table from `db2` to be compared.
      */
     private void compareTablesWithSameName(Table table1, Table table2) {
-        //System.out.println("Diferencias entre las tablas " + table1 + " y " + table2);
+        logger.add("\n============== Diferencias entre las tablas con nombre: '" + table1.getName() + "' ============== \n");
+
         columnComparator.compareColumns(table1, table2);
         logger.copy(columnComparator.getLogger());
-        //
+
         triggerComparator.compareTriggers(table1, table2);
         logger.copy(triggerComparator.getLogger());
-        //
+
         keysComparator.compareKeys(table1, table2);
         logger.copy(keysComparator.getLogger());
-        //
+
         indexComparator.compareIndexes(table1, table2);
         logger.copy(indexComparator.getLogger());
-        //
-    }	
-} 
+    }
+}

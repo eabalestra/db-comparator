@@ -28,13 +28,8 @@ public class ColumnComparator {
         List<Column> table1AdditionalColumns = findAdditionalColumns(columns1, columns2);
         List<Column> table2AdditionalColumns = findAdditionalColumns(columns2, columns1);
         
-        System.out.println();
-        System.out.println("===============================================================================================================");
-        System.out.println("Comparando las tablas: " + table1.getName());
-        logger.add("Comparando las tablas: " + table1.getName());
-        System.out.println();
+        logger.add("--- Diferencias entre columnas: ---");
         
-        // Compare columns with same name
         for (Column column1 : columns1) {
             for (Column column2 : columns2) {
                 if (column1.getName().equals(column2.getName())) {
@@ -43,10 +38,8 @@ public class ColumnComparator {
                 }
             }
         }
-        logger.add("Columnas adicionales de la tabla 1" + " : " + table1AdditionalColumns);
-        logger.add("Columnas adicionales de la tabla 2" + " : " + table2AdditionalColumns);
-        System.out.println("Columnas adicionales de la tabla 1" + " : " + table1AdditionalColumns);
-        System.out.println("Columnas adicionales de la tabla 2" + " : " + table2AdditionalColumns);
+        logger.add("  Columnas adicionales de la tabla 1" + " : " + table1AdditionalColumns);
+        logger.add("  Columnas adicionales de la tabla 2" + " : " + table2AdditionalColumns);
     }
 
     /**
@@ -57,8 +50,7 @@ public class ColumnComparator {
      */
     private void compareColumnsWithSameName(Column column1, Column column2) {
         if (!column1.equals(column2)) {
-            logger.add("Las columnas " + column1.getName() + " tienen tipos diferentes: " + column1.getType() + " y " + column2.getType());
-            System.out.println("Las columnas " + column1.getName() + " tienen tipos diferentes: " + column1.getType() + " y " + column2.getType());
+            logger.add("  Las columnas '" + column1.getName() + "' tienen tipos diferentes: " + column1.getType() + " y " + column2.getType());
         }
     }
 

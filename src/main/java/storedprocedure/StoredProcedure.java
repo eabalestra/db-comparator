@@ -36,6 +36,16 @@ public class StoredProcedure {
     }
 
     /**
+     * Returns the columns of the stored procedure.
+     *
+     * @return the columns of the stored procedure
+     */
+    public List<StoredProcedureColumn> getColumns() {
+        return columns;
+    }
+
+
+    /**
      * Adds a column to the stored procedure.
      *
      * @param column the column to be added, representing a parameter or return type
