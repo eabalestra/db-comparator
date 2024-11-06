@@ -9,6 +9,7 @@ public enum ColumnType {
     DATE,
     NUMERIC,
     TRIGGER,
+    VOID,
     SERIAL;
 
     public static ColumnType fromString(String type) {
