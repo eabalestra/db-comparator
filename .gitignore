@@ -39,3 +39,6 @@ build/
 
 ### IntelliJ IDEA ###
 /.idea/
+
+# Target directory
+/bin/

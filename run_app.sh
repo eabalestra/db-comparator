@@ -1,3 +1,0 @@
-javac -d bin -cp .:lib/postgresql-42.7.4_145047740610.jar src/main/java/app/*.java src/main/java/comparator/*.java src/main/java/comparator/storedprocedure/*.java src/main/java/dataloader/*.java src/main/java/db/*.java src/main/java/logger/*.java src/main/java/properties/*.java src/main/java/storedprocedure/*.java src/main/java/storedprocedure/column/*.java src/main/java/table/*.java src/main/java/table/column/*.java src/main/java/table/foreignkey/*.java src/main/java/table/index/*.java src/main/java/table/trigger/*.java
-
-java -cp .:lib/postgresql-42.7.4_145047740610.jar src/main/java app.Main
