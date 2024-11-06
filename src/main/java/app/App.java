@@ -21,6 +21,7 @@ public class App {
 
     public void execute() throws SQLException {
         DatabaseSchemaLoader dbLoader = new DatabaseSchemaLoader();
+        Logger logger = new Logger();
 
         System.out.println("Connecting to Database 1: " + databaseConnectionOne);
         System.out.println("Connecting to Database 2: " + databaseConnectionTwo);
@@ -30,10 +31,11 @@ public class App {
         Database databaseTwo = dbLoader.loadDatabaseSchema(databaseConnectionTwo);
         databaseTwo.setSchema(databaseConnectionTwo.getSchema());
         
-        TableComparator tableComparator = new TableComparator(databaseOne, databaseTwo);
+        TableComparator tableComparator = new TableComparator(databaseOne, databaseTwo, logger);
         tableComparator.compareTables();
-        StoredProcedureComparator storedProcedureComparator = new StoredProcedureComparator(databaseOne, databaseTwo, new Logger());
+        StoredProcedureComparator storedProcedureComparator = new StoredProcedureComparator(databaseOne, databaseTwo, logger);
         storedProcedureComparator.compareStoredProcedures();
+        logger.writeFile("resultOfDatabaseComparisons");
     }
 
     private void loadDatabaseDriver() {

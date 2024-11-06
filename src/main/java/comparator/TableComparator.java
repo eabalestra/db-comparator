@@ -19,14 +19,14 @@ public class TableComparator {
     private KeysComparator keysComparator;
     private IndexComparator indexComparator;
 
-    public TableComparator(Database db1, Database db2) {
+    public TableComparator(Database db1, Database db2, Logger logger) {
         this.db1 = db1;
         this.db2 = db2;
         columnComparator = new ColumnComparator();
         triggerComparator = new TriggerComparator();
         keysComparator = new KeysComparator();
         indexComparator = new IndexComparator();
-        logger = new Logger();
+        this.logger = logger;
         loggerDb1 = new Logger();
         loggerDb2 = new Logger();
     }
@@ -75,7 +75,7 @@ public class TableComparator {
         //
         loggerDb1.writeFile("db1");
         loggerDb2.writeFile("db2");
-        logger.writeFile("file");
+        //logger.writeFile("file");
 
     }
 

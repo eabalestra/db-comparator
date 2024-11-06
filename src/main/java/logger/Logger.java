@@ -33,7 +33,7 @@ public class Logger {
     }
 
     public void writeFile(String fileName) {
-        String rutaDirectorio = "src/main/resources/files"; // Directorio dentro de resources
+        String rutaDirectorio = "resultfiles"; // Directorio dentro de resources
         String nombreArchivo = fileName + ".txt";
         String contenido = file;
 
@@ -48,7 +48,7 @@ public class Logger {
             FileWriter escritor = new FileWriter(rutaDirectorio + "/" + nombreArchivo);
             escritor.write(contenido);
             escritor.close();
-            System.out.println("Archivo creado exitosamente en " + rutaDirectorio);
+            System.out.println("\n\n"+"Archivo creado exitosamente en " + rutaDirectorio);
         } catch (IOException e) {
             System.out.println("Ocurrió un error al crear o escribir en el archivo.");
             e.printStackTrace();

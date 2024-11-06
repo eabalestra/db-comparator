@@ -94,3 +94,29 @@ Indices adicionales de la tabla 2 : []
 Tablas adicionales de la base de datos 1: []
 
 Tablas adicionales de la base de datos 2: []
+
+============== Diferencias entre los procedimientos con nombre: 'prueba2' ============== 
+
+--- Diferencias entre los parámetros de órden: 1 ---
+  Párametro del procedure 1: StoredProcedureColumn [columnName=hola, columnOrder=1, parameterType=OUT, type=INT4]
+  Párametro del procedure 2: StoredProcedureColumn [columnName=hola, columnOrder=1, parameterType=OUT, type=VARCHAR]
+
+--- Diferencias entre los parámetros de órden: 2 ---
+  Párametro del procedure 1: StoredProcedureColumn [columnName=chau, columnOrder=2, parameterType=IN, type=INT4]
+  Párametro del procedure 2: StoredProcedureColumn [columnName=chau, columnOrder=2, parameterType=INOUT, type=INT4]
+
+--- Diferencias entre los parámetros de órden: 4 ---
+  Párametro del procedure 1: StoredProcedureColumn [columnName=silla, columnOrder=4, parameterType=IN, type=VARCHAR]
+  Párametro del procedure 2: StoredProcedureColumn [columnName=silla, columnOrder=4, parameterType=INOUT, type=VARCHAR]
+
+
+============== Diferencias entre los procedimientos con nombre: 'registrar_partido' ============== 
+
+Parámetros adicionales: 
+column: StoredProcedureColumn [columnName=p_arbitro, columnOrder=4, parameterType=IN, type=VARCHAR]
+
+
+¿Tienen los mismos procedimientos/funciones? No
+
+Procedimientos Almacenados adicionales de la base de datos 1: [StoredProcedure{name='calcular_edad_jugador', columns=[StoredProcedureColumn [columnName=returnValue, columnOrder=0, parameterType=RETURN, type=INT4], StoredProcedureColumn [columnName=p_id_jugador, columnOrder=1, parameterType=IN, type=INT4]]}]
+Procedimientos Almacenados adicionales de la base de datos 2: [StoredProcedure{name='contar_partidos_equipo', columns=[StoredProcedureColumn [columnName=returnValue, columnOrder=0, parameterType=RETURN, type=INT4], StoredProcedureColumn [columnName=p_id_equipo, columnOrder=1, parameterType=IN, type=INT4]]}]

@@ -14,6 +14,10 @@ public class StoredProcedureComparator {
     Logger logger;
     StoredProcedureColumnComparator storedProcedureColumnComparator;
 
+    public Logger getLogger() {
+        return logger;
+    }
+
     public StoredProcedureComparator(Database database1, Database database2, Logger logger) {
         this.database1 = database1;
         this.database2 = database2;
@@ -33,27 +37,23 @@ public class StoredProcedureComparator {
         for (StoredProcedure procedure1 : storedProcedures1) {
             for (StoredProcedure procedure2 : storedProcedures2) {
                 if (procedure1.getName().equals(procedure2.getName())) {
+                    logger.add("\n============== Diferencias entre los procedimientos con nombre: '"
+                            + procedure1.getName() + "' ============== \n");
                     compareStoredProceduresWithSameName(procedure1, procedure2);
                     break;
                 }
             }
         }
 
-        System.out.println("¿Tienen los mismos procedimientos/funciones? "
-                + (db1additionalStoredProcedures.isEmpty() && db2additionalStoredProcedures.isEmpty() ? "Sí" : "No"));
+        logger.add("\n¿Tienen los mismos procedimientos/funciones? "
+                + (db1additionalStoredProcedures.isEmpty() && db2additionalStoredProcedures.isEmpty() ? "Sí\n" : "No\n"));
 
         if (!db1additionalStoredProcedures.isEmpty()) {
-            System.out.println(
-                    "Procedimientos/funciones adicionales en la base de datos 1: " + db1additionalStoredProcedures);
             logger.add(
                     "Procedimientos Almacenados adicionales de la base de datos 1: " + db1additionalStoredProcedures);
         }
 
-        System.out.println();
-
         if (!db2additionalStoredProcedures.isEmpty()) {
-            System.out.println(
-                    "Procedimientos/funciones adicionales en la base de datos 2: " + db2additionalStoredProcedures);
             logger.add(
                     "Procedimientos Almacenados adicionales de la base de datos 2: " + db2additionalStoredProcedures);
         }

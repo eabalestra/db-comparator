@@ -22,11 +22,6 @@ public class StoredProcedureColumnComparator {
         List<StoredProcedureColumn> storedProcedureColumns1 = storedProcedure1.getColumns();
         List<StoredProcedureColumn> storedProcedureColumns2 = storedProcedure2.getColumns();
 
-        System.out.println("--- Diferencias entre parámetros de '" + storedProcedure1.getName() + "' y '"
-                + storedProcedure2.getName() + "'. --- \n");
-        logger.add("--- Diferencias entre parámetros de '" + storedProcedure1.getName() + "' y '"
-                + storedProcedure2.getName() + "'. --- \n");
-
         int stProcSize = storedProcedureColumns1.size() < storedProcedureColumns2.size()
                 ? storedProcedureColumns1.size()
                 : storedProcedureColumns2.size();
@@ -38,25 +33,21 @@ public class StoredProcedureColumnComparator {
         for (int i = 0; i < stProcSize; i++) {
             StoredProcedureColumn storedProcedureColumn1 = storedProcedureColumns1.get(i);
             if (!storedProcedureColumn1.equals(storedProcedureColumns2.get(i))) {
-                System.out.println(
+                
+                logger.add(
                         "--- Diferencias entre los parámetros de órden: " + storedProcedureColumn1.getColumnOrder()
                                 + " ---");
-                System.out.println("  Párametro del procedure 1: " + storedProcedureColumns1.get(i));
-                System.out.println("  Párametro del procedure 2: " + storedProcedureColumns2.get(i));
-
+                
+                logger.add("  Párametro del procedure 1: " + storedProcedureColumns1.get(i));
+                logger.add("  Párametro del procedure 2: " + storedProcedureColumns2.get(i) + "\n");
             }
         }
 
-        System.out.println("Parámetros adicionales de " + storedProcedure1.getName() + ": ");
-        //
-        logger.add("Parámetros adicionales de " + storedProcedure1.getName() + ": ");
-        //
+        
         if (stProcSize < stProcMax.size()) {
+            logger.add("Parámetros adicionales: ");
             for (int i = stProcSize; i < stProcMax.size(); i++) {
-                System.out.println("column: " + stProcMax.get(i) + "\n");
-                //
                 logger.add("column: " + stProcMax.get(i) + "\n");
-                //
             }
         }
     }
