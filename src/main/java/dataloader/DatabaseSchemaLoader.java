@@ -54,7 +54,7 @@ public class DatabaseSchemaLoader {
                 List<ForeignKey> fkList = loadForeignKeys(metaData, schema, tableName);
                 table.setForeignKeys(fkList);
 
-                List<Trigger> triggerList = loadTriggers(connection, tableName);
+                List<Trigger> triggerList = loadTriggers(connection, tableName, schema);
                 table.setTriggers(triggerList);
 
                 List<Index> indexList = loadIndexes(metaData, schema, tableName);
@@ -69,6 +69,8 @@ public class DatabaseSchemaLoader {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+        System.out.println();
         return database;
     }
 
@@ -105,7 +107,7 @@ public class DatabaseSchemaLoader {
         return proceduresList;
     }
 
-    private List<Trigger> loadTriggers(Connection connection, String tableName) throws SQLException {
+    private List<Trigger> loadTriggers(Connection connection, String tableName, String schemaName) throws SQLException {
         List<Trigger> triggerList = new ArrayList<>();
         String selectQuery = "SELECT event_object_table, " +
                 "trigger_name, " +
@@ -113,12 +115,16 @@ public class DatabaseSchemaLoader {
                 "action_statement, " +
                 "action_timing " +
                 "FROM information_schema.triggers " +
-                "WHERE event_object_table = ? " +
+                "WHERE event_object_schema = ? AND event_object_table = ? " +
                 "ORDER BY event_object_table, event_manipulation;";
 
         PreparedStatement statement = connection.prepareStatement(selectQuery);
-        statement.setString(1, tableName);
+
+        statement.setString(1, schemaName);
+        statement.setString(2, tableName);
+
         ResultSet resultSetTriggers = statement.executeQuery();
+
         while (resultSetTriggers.next()) {
             String triggerName = resultSetTriggers.getString("trigger_name");
             String eventManipulation = resultSetTriggers.getString("event_manipulation"); // insert, update, delete
@@ -127,6 +133,7 @@ public class DatabaseSchemaLoader {
             Trigger newTrigger = new Trigger(triggerName, tableName, actionTiming, eventManipulation);
             triggerList.add(newTrigger);
         }
+
         return triggerList;
     }
 

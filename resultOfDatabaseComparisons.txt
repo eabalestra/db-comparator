@@ -1,11 +1,13 @@
 
-============== Diferencias entre las tablas con nombre: 'equipo' ============== 
+============== Diferencias entre las tablas con nombre: 'cliente' ============== 
 
 --- Diferencias entre columnas: ---
-  Columnas adicionales de la tabla 1 : []
-  Columnas adicionales de la tabla 2 : [{"name": "entrenador","type": "VARCHAR"}]
+  Las columnas 'telefono' tienen tipos diferentes: VARCHAR y INT4
+  Columnas adicionales de la tabla 1 : [{"name": "dni","type": "INT4"}]
+  Columnas adicionales de la tabla 2 : []
 
 --- Diferencias entre los triggers: ---
+  Los triggers 'after_insert_cliente' tienen diferentes momentos de disparos: BEFORE INSERT y AFTER INSERT
   Triggers adicionales de la tabla 1 : []
   Triggers adicionales de la tabla 2 : []
 
@@ -19,24 +21,30 @@
 
 --- Diferencias entre las claves únicas: ---
   Unique Keys adicionales de la tabla 1 : []
-  Unique Keys adicionales de la tabla 2 : []
+  Unique Keys adicionales de la tabla 2 : [telefono]
 
 --- Diferencias entre los índices: ---
-Indices adicionales de la tabla 1 : []
+Indices adicionales de la tabla 1 : [{
+  "name" : "idx_cliente_apellido",
+  "tableName" : "cliente",
+  "fields" : {apellido=true},
+  "type" : "NORMAL"
+}
+]
 Indices adicionales de la tabla 2 : [{
-  "name" : "idx_equipo_ciudad",
-  "tableName" : "equipo",
-  "fields" : {ciudad=true},
+  "name" : "index_cliente_apellido",
+  "tableName" : "cliente",
+  "fields" : {apellido=true},
   "type" : "NORMAL"
 }
 ]
 
 
-============== Diferencias entre las tablas con nombre: 'jugador' ============== 
+============== Diferencias entre las tablas con nombre: 'factura' ============== 
 
 --- Diferencias entre columnas: ---
   Columnas adicionales de la tabla 1 : []
-  Columnas adicionales de la tabla 2 : [{"name": "nacionalidad","type": "VARCHAR"}]
+  Columnas adicionales de la tabla 2 : []
 
 --- Diferencias entre los triggers: ---
   Triggers adicionales de la tabla 1 : []
@@ -51,29 +59,78 @@ Indices adicionales de la tabla 2 : [{
   Primary Keys adicionales de la tabla 2 : []
 
 --- Diferencias entre las claves únicas: ---
-  Unique Keys adicionales de la tabla 1 : []
+  Unique Keys adicionales de la tabla 1 : [nro_cliente]
   Unique Keys adicionales de la tabla 2 : []
 
 --- Diferencias entre los índices: ---
 Indices adicionales de la tabla 1 : [{
-  "name" : "idx_jugador_posicion",
-  "tableName" : "jugador",
-  "fields" : {posicion=true},
-  "type" : "NORMAL"
+  "name" : "factura_nro_cliente_key",
+  "tableName" : "factura",
+  "fields" : {nro_cliente=true},
+  "type" : "UNIQUE"
 }
 ]
 Indices adicionales de la tabla 2 : []
 
 
-============== Diferencias entre las tablas con nombre: 'partido' ============== 
+============== Diferencias entre las tablas con nombre: 'itemfactura' ============== 
 
 --- Diferencias entre columnas: ---
-  Columnas adicionales de la tabla 1 : []
-  Columnas adicionales de la tabla 2 : [{"name": "arbitro","type": "VARCHAR"}]
+  Columnas adicionales de la tabla 1 : [{"name": "nro_cliente","type": "INT4"}]
+  Columnas adicionales de la tabla 2 : []
 
 --- Diferencias entre los triggers: ---
   Triggers adicionales de la tabla 1 : []
   Triggers adicionales de la tabla 2 : []
+
+--- Diferencias entre las claves foráneas: ---
+  Foreign Keys adicionales de la tabla 1 : [ForeignKey{name='itemfactura_nro_cliente_fkey', tableColumn='nro_cliente', referencedTable='cliente', referencedColumn='nro_cliente'}]
+  Foreign Keys adicionales de la tabla 2 : []
+
+--- Diferencias entre las claves primarias: ---
+  Primary Keys adicionales de la tabla 1 : []
+  Primary Keys adicionales de la tabla 2 : [nro_factura]
+
+--- Diferencias entre las claves únicas: ---
+  Unique Keys adicionales de la tabla 1 : []
+  Unique Keys adicionales de la tabla 2 : []
+
+--- Diferencias entre los índices: ---
+  Los indices 'itemfactura_pkey' tienen fields diferentes: {cod_producto=true} y {nro_factura=true, cod_producto=true}
+Indices adicionales de la tabla 1 : [{
+  "name" : "itemfactura_cod_producto_nro_factura_key",
+  "tableName" : "itemfactura",
+  "fields" : {nro_factura=true, cod_producto=true},
+  "type" : "UNIQUE"
+}
+]
+Indices adicionales de la tabla 2 : []
+
+
+============== Diferencias entre las tablas con nombre: 'producto' ============== 
+
+--- Diferencias entre columnas: ---
+  Las columnas 'cantidad' tienen tipos diferentes: FLOAT8 y INT4
+  Columnas adicionales de la tabla 1 : []
+  Columnas adicionales de la tabla 2 : [{"name": "descripcion","type": "VARCHAR"}]
+
+--- Diferencias entre los triggers: ---
+  Los triggers 'triggerencliente' tienen diferentes momentos de disparos: BEFORE INSERT y AFTER INSERT
+  Los triggers 'after_update_stock_producto' tienen diferentes momentos de disparos: AFTER UPDATE y BEFORE INSERT
+  Triggers adicionales de la tabla 1 : []
+  Triggers adicionales de la tabla 2 : [{
+  "name" : "triggerencliente2",
+  "actionTrigger" : "AFTER",
+  "tableName" : "producto",
+  "eventManipulation" : "INSERT"
+}
+, {
+  "name" : "after_update_cantidad",
+  "actionTrigger" : "AFTER",
+  "tableName" : "producto",
+  "eventManipulation" : "UPDATE"
+}
+]
 
 --- Diferencias entre las claves foráneas: ---
   Foreign Keys adicionales de la tabla 1 : []
@@ -88,35 +145,46 @@ Indices adicionales de la tabla 2 : []
   Unique Keys adicionales de la tabla 2 : []
 
 --- Diferencias entre los índices: ---
+  Los indices 'idx_producto_stock' tienen fields diferentes: {stock_minimo=true, stock_maximo=false} y {stock_minimo=true, stock_maximo=true}
+  Los indices 'idx_producto_cantidad_desc' tienen fields diferentes: {cantidad=false} y {cantidad=true}
+  Los indices 'idx_producto_precio' tienen fields diferentes: {precio=true} y {precio=false}
 Indices adicionales de la tabla 1 : []
-Indices adicionales de la tabla 2 : []
+Indices adicionales de la tabla 2 : [{
+  "name" : "idx_producto_descripcion",
+  "tableName" : "producto",
+  "fields" : {descripcion=true},
+  "type" : "NORMAL"
+}
+]
 
-Tablas adicionales de la base de datos 1: []
+Tablas adicionales de la base de datos 1: [{
+  "name" : "pago",
+  "columns" : [{"name": "nro_pago","type": "SERIAL"}, {"name": "nro_factura","type": "INT4"}, {"name": "fecha_pago","type": "DATE"}, {"name": "monto_pago","type": "FLOAT8"}, {"name": "metodo_pago","type": "VARCHAR"}],
+  "triggers" : [],
+  "indexes" : [{
+  "name" : "pago_pkey",
+  "tableName" : "pago",
+  "fields" : {nro_pago=true},
+  "type" : "UNIQUE"
+}
+],
+  "foreignKeys" : [ForeignKey{name='pago_nro_factura_fkey', tableColumn='nro_factura', referencedTable='factura', referencedColumn='nro_factura'}],
+  "primaryKeys" : [nro_pago],
+  "uniqueKeys" : [nro_pago]
+}
+]
 
 Tablas adicionales de la base de datos 2: []
 
-============== Diferencias entre los procedimientos con nombre: 'prueba2' ============== 
-
---- Diferencias entre los parámetros de órden: 1 ---
-  Párametro del procedure 1: StoredProcedureColumn [columnName=hola, columnOrder=1, parameterType=OUT, type=INT4]
-  Párametro del procedure 2: StoredProcedureColumn [columnName=hola, columnOrder=1, parameterType=OUT, type=VARCHAR]
-
---- Diferencias entre los parámetros de órden: 2 ---
-  Párametro del procedure 1: StoredProcedureColumn [columnName=chau, columnOrder=2, parameterType=IN, type=INT4]
-  Párametro del procedure 2: StoredProcedureColumn [columnName=chau, columnOrder=2, parameterType=INOUT, type=INT4]
-
---- Diferencias entre los parámetros de órden: 4 ---
-  Párametro del procedure 1: StoredProcedureColumn [columnName=silla, columnOrder=4, parameterType=IN, type=VARCHAR]
-  Párametro del procedure 2: StoredProcedureColumn [columnName=silla, columnOrder=4, parameterType=INOUT, type=VARCHAR]
+============== Diferencias entre los procedimientos con nombre: 'log_new_cliente' ============== 
 
 
-============== Diferencias entre los procedimientos con nombre: 'registrar_partido' ============== 
+============== Diferencias entre los procedimientos con nombre: 'log_stock_update' ============== 
 
-Parámetros adicionales: 
-column: StoredProcedureColumn [columnName=p_arbitro, columnOrder=4, parameterType=IN, type=VARCHAR]
+
+============== Diferencias entre los procedimientos con nombre: 'pepe' ============== 
 
 
 ¿Tienen los mismos procedimientos/funciones? No
 
-Procedimientos Almacenados adicionales de la base de datos 1: [StoredProcedure{name='calcular_edad_jugador', columns=[StoredProcedureColumn [columnName=returnValue, columnOrder=0, parameterType=RETURN, type=INT4], StoredProcedureColumn [columnName=p_id_jugador, columnOrder=1, parameterType=IN, type=INT4]]}]
-Procedimientos Almacenados adicionales de la base de datos 2: [StoredProcedure{name='contar_partidos_equipo', columns=[StoredProcedureColumn [columnName=returnValue, columnOrder=0, parameterType=RETURN, type=INT4], StoredProcedureColumn [columnName=p_id_equipo, columnOrder=1, parameterType=IN, type=INT4]]}]
+Procedimientos Almacenados adicionales de la base de datos 2: [StoredProcedure{name='check_stock_level', columns=[StoredProcedureColumn [columnName=returnValue, columnOrder=0, parameterType=RETURN, type=TRIGGER]]}, StoredProcedure{name='pepe2', columns=[StoredProcedureColumn [columnName=returnValue, columnOrder=0, parameterType=RETURN, type=TRIGGER]]}]

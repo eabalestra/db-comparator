@@ -12,8 +12,7 @@ public class TableComparator {
     private Database db1;
     private Database db2;
     private Logger logger;
-    private Logger loggerDb1;
-    private Logger loggerDb2;
+    
     private ColumnComparator columnComparator;
     private TriggerComparator triggerComparator;
     private KeysComparator keysComparator;
@@ -27,8 +26,6 @@ public class TableComparator {
         keysComparator = new KeysComparator();
         indexComparator = new IndexComparator();
         this.logger = logger;
-        loggerDb1 = new Logger();
-        loggerDb2 = new Logger();
     }
 
     public void setDb1(Database db1) {
@@ -55,8 +52,7 @@ public class TableComparator {
     public void compareTables() {
         List<Table> db1Tables = db1.getTables();
         List<Table> db2Tables = db2.getTables();
-        loggerDb1.add(db1.toString());
-        loggerDb2.add(db2.toString());
+        
         List<Table> db1AdditionalTables = findAdditionalTables(db1Tables, db2Tables);
         List<Table> db2AdditionalTables = findAdditionalTables(db2Tables, db1Tables);
 
@@ -72,10 +68,7 @@ public class TableComparator {
 
         logger.add("Tablas adicionales de la base de datos 1: " + db1AdditionalTables);
         logger.add("\nTablas adicionales de la base de datos 2: " + db2AdditionalTables);
-        //
-        loggerDb1.writeFile("db1");
-        loggerDb2.writeFile("db2");
-        //logger.writeFile("file");
+        //       
 
     }
 

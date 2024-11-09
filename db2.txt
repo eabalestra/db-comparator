@@ -1,61 +1,145 @@
-Schema: football2
+Schema: public
 Tables: 
 {
-  "name" : "equipo",
-  "columns" : [{"name": "id_equipo","type": "SERIAL"}, {"name": "nombre","type": "VARCHAR"}, {"name": "ciudad","type": "VARCHAR"}, {"name": "fecha_fundacion","type": "DATE"}, {"name": "presupuesto","type": "NUMERIC"}, {"name": "entrenador","type": "VARCHAR"}],
-  "triggers" : [],
+  "name" : "cliente",
+  "columns" : [{"name": "nro_cliente","type": "INT4"}, {"name": "apellido","type": "VARCHAR"}, {"name": "nombre","type": "VARCHAR"}, {"name": "direccion","type": "VARCHAR"}, {"name": "telefono","type": "INT4"}],
+  "triggers" : [{
+  "name" : "after_insert_cliente",
+  "actionTrigger" : "AFTER",
+  "tableName" : "cliente",
+  "eventManipulation" : "INSERT"
+}
+],
   "indexes" : [{
-  "name" : "equipo_pkey",
-  "tableName" : "equipo",
-  "fields" : {id_equipo=true},
+  "name" : "index_cliente_apellido",
+  "tableName" : "cliente",
+  "fields" : {apellido=true},
+  "type" : "NORMAL"
+}
+, {
+  "name" : "idx_cliente_telefono",
+  "tableName" : "cliente",
+  "fields" : {telefono=true},
   "type" : "UNIQUE"
 }
 , {
-  "name" : "idx_equipo_ciudad",
-  "tableName" : "equipo",
-  "fields" : {ciudad=true},
+  "name" : "cliente_pkey",
+  "tableName" : "cliente",
+  "fields" : {nro_cliente=true},
+  "type" : "UNIQUE"
+}
+, {
+  "name" : "idx_cliente_apellido_nombre",
+  "tableName" : "cliente",
+  "fields" : {apellido=true, nombre=true},
   "type" : "NORMAL"
 }
 ],
   "foreignKeys" : [],
-  "primaryKeys" : [id_equipo],
-  "uniqueKeys" : [id_equipo]
+  "primaryKeys" : [nro_cliente],
+  "uniqueKeys" : [nro_cliente, telefono]
 }
 
 {
-  "name" : "jugador",
-  "columns" : [{"name": "id_jugador","type": "SERIAL"}, {"name": "nombre","type": "VARCHAR"}, {"name": "posicion","type": "VARCHAR"}, {"name": "nacionalidad","type": "VARCHAR"}, {"name": "fecha_nacimiento","type": "DATE"}, {"name": "id_equipo","type": "INT4"}],
+  "name" : "factura",
+  "columns" : [{"name": "nro_factura","type": "SERIAL"}, {"name": "nro_cliente","type": "INT4"}, {"name": "fecha","type": "DATE"}, {"name": "monto","type": "FLOAT8"}],
   "triggers" : [],
   "indexes" : [{
-  "name" : "jugador_pkey",
-  "tableName" : "jugador",
-  "fields" : {id_jugador=true},
+  "name" : "factura_pkey",
+  "tableName" : "factura",
+  "fields" : {nro_factura=true},
   "type" : "UNIQUE"
 }
 ],
-  "foreignKeys" : [ForeignKey{name='jugador_id_equipo_fkey', tableColumn='id_equipo', referencedTable='equipo', referencedColumn='id_equipo'}],
-  "primaryKeys" : [id_jugador],
-  "uniqueKeys" : [id_jugador]
+  "foreignKeys" : [ForeignKey{name='factura_nro_cliente_fkey', tableColumn='nro_cliente', referencedTable='cliente', referencedColumn='nro_cliente'}],
+  "primaryKeys" : [nro_factura],
+  "uniqueKeys" : [nro_factura]
 }
 
 {
-  "name" : "partido",
-  "columns" : [{"name": "id_partido","type": "SERIAL"}, {"name": "equipo_local","type": "INT4"}, {"name": "equipo_visitante","type": "INT4"}, {"name": "fecha","type": "DATE"}, {"name": "marcador_local","type": "INT4"}, {"name": "marcador_visitante","type": "INT4"}, {"name": "arbitro","type": "VARCHAR"}],
+  "name" : "itemfactura",
+  "columns" : [{"name": "cod_producto","type": "INT4"}, {"name": "nro_factura","type": "INT4"}, {"name": "cantidad","type": "INT4"}, {"name": "precio","type": "FLOAT8"}],
   "triggers" : [],
   "indexes" : [{
-  "name" : "partido_pkey",
-  "tableName" : "partido",
-  "fields" : {id_partido=true},
+  "name" : "itemfactura_pkey",
+  "tableName" : "itemfactura",
+  "fields" : {nro_factura=true, cod_producto=true},
   "type" : "UNIQUE"
 }
 ],
-  "foreignKeys" : [ForeignKey{name='partido_equipo_local_fkey', tableColumn='equipo_local', referencedTable='equipo', referencedColumn='id_equipo'}, ForeignKey{name='partido_equipo_visitante_fkey', tableColumn='equipo_visitante', referencedTable='equipo', referencedColumn='id_equipo'}],
-  "primaryKeys" : [id_partido],
-  "uniqueKeys" : [id_partido]
+  "foreignKeys" : [ForeignKey{name='itemfactura_nro_factura_fkey', tableColumn='nro_factura', referencedTable='factura', referencedColumn='nro_factura'}, ForeignKey{name='itemfactura_cod_producto_fkey', tableColumn='cod_producto', referencedTable='producto', referencedColumn='cod_producto'}],
+  "primaryKeys" : [cod_producto, nro_factura],
+  "uniqueKeys" : [cod_producto, nro_factura]
+}
+
+{
+  "name" : "producto",
+  "columns" : [{"name": "cod_producto","type": "INT4"}, {"name": "descripcion","type": "VARCHAR"}, {"name": "precio","type": "FLOAT8"}, {"name": "stock_minimo","type": "INT4"}, {"name": "stock_maximo","type": "INT4"}, {"name": "cantidad","type": "INT4"}],
+  "triggers" : [{
+  "name" : "after_update_stock_producto",
+  "actionTrigger" : "BEFORE",
+  "tableName" : "producto",
+  "eventManipulation" : "INSERT"
+}
+, {
+  "name" : "triggerencliente",
+  "actionTrigger" : "AFTER",
+  "tableName" : "producto",
+  "eventManipulation" : "INSERT"
+}
+, {
+  "name" : "triggerencliente2",
+  "actionTrigger" : "AFTER",
+  "tableName" : "producto",
+  "eventManipulation" : "INSERT"
+}
+, {
+  "name" : "after_update_cantidad",
+  "actionTrigger" : "AFTER",
+  "tableName" : "producto",
+  "eventManipulation" : "UPDATE"
+}
+],
+  "indexes" : [{
+  "name" : "producto_pkey",
+  "tableName" : "producto",
+  "fields" : {cod_producto=true},
+  "type" : "UNIQUE"
+}
+, {
+  "name" : "idx_producto_descripcion",
+  "tableName" : "producto",
+  "fields" : {descripcion=true},
+  "type" : "NORMAL"
+}
+, {
+  "name" : "idx_producto_stock",
+  "tableName" : "producto",
+  "fields" : {stock_minimo=true, stock_maximo=true},
+  "type" : "NORMAL"
+}
+, {
+  "name" : "idx_producto_cantidad_desc",
+  "tableName" : "producto",
+  "fields" : {cantidad=true},
+  "type" : "NORMAL"
+}
+, {
+  "name" : "idx_producto_precio",
+  "tableName" : "producto",
+  "fields" : {precio=false},
+  "type" : "NORMAL"
+}
+],
+  "foreignKeys" : [],
+  "primaryKeys" : [cod_producto],
+  "uniqueKeys" : [cod_producto]
 }
 
 Stored Procedures: 
-StoredProcedure{name='contar_partidos_equipo', columns=[StoredProcedureColumn [columnName=returnValue, columnOrder=0, parameterType=RETURN, type=INT4], StoredProcedureColumn [columnName=p_id_equipo, columnOrder=1, parameterType=IN, type=INT4]]}
-StoredProcedure{name='prueba2', columns=[StoredProcedureColumn [columnName=hola, columnOrder=1, parameterType=OUT, type=VARCHAR], StoredProcedureColumn [columnName=chau, columnOrder=2, parameterType=INOUT, type=INT4], StoredProcedureColumn [columnName=pepe, columnOrder=3, parameterType=IN, type=DATE], StoredProcedureColumn [columnName=silla, columnOrder=4, parameterType=INOUT, type=VARCHAR]]}
-StoredProcedure{name='registrar_partido', columns=[StoredProcedureColumn [columnName=returnValue, columnOrder=0, parameterType=RETURN, type=VOID], StoredProcedureColumn [columnName=p_equipo_local, columnOrder=1, parameterType=IN, type=INT4], StoredProcedureColumn [columnName=p_equipo_visitante, columnOrder=2, parameterType=IN, type=INT4], StoredProcedureColumn [columnName=p_fecha, columnOrder=3, parameterType=IN, type=DATE], StoredProcedureColumn [columnName=p_arbitro, columnOrder=4, parameterType=IN, type=VARCHAR]]}
+StoredProcedure{name='check_stock_level', columns=[StoredProcedureColumn [columnName=returnValue, columnOrder=0, parameterType=RETURN, type=TRIGGER]]}
+StoredProcedure{name='log_new_cliente', columns=[StoredProcedureColumn [columnName=returnValue, columnOrder=0, parameterType=RETURN, type=TRIGGER]]}
+StoredProcedure{name='log_stock_update', columns=[StoredProcedureColumn [columnName=returnValue, columnOrder=0, parameterType=RETURN, type=TRIGGER]]}
+StoredProcedure{name='pepe', columns=[StoredProcedureColumn [columnName=returnValue, columnOrder=0, parameterType=RETURN, type=TRIGGER]]}
+StoredProcedure{name='pepe2', columns=[StoredProcedureColumn [columnName=returnValue, columnOrder=0, parameterType=RETURN, type=TRIGGER]]}
 

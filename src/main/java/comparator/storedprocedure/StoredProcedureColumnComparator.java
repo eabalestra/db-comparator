@@ -33,21 +33,20 @@ public class StoredProcedureColumnComparator {
         for (int i = 0; i < stProcSize; i++) {
             StoredProcedureColumn storedProcedureColumn1 = storedProcedureColumns1.get(i);
             if (!storedProcedureColumn1.equals(storedProcedureColumns2.get(i))) {
-                
                 logger.add(
                         "--- Diferencias entre los parámetros de órden: " + storedProcedureColumn1.getColumnOrder()
                                 + " ---");
-                
-                logger.add("  Párametro del procedure 1: " + storedProcedureColumns1.get(i));
-                logger.add("  Párametro del procedure 2: " + storedProcedureColumns2.get(i) + "\n");
+
+                logger.add("  Párametro del procedure 1 (Base de datos 1): " + storedProcedureColumns1.get(i));
+                logger.add("  Párametro del procedure 2 (Base de datos 2): " + storedProcedureColumns2.get(i) + "\n");
             }
         }
 
-        
         if (stProcSize < stProcMax.size()) {
             logger.add("Parámetros adicionales: ");
             for (int i = stProcSize; i < stProcMax.size(); i++) {
-                logger.add("column: " + stProcMax.get(i) + "\n");
+                logger.add("column (Base de datos " + (stProcMax == storedProcedureColumns1 ? "1" : "2") + "): "
+                        + stProcMax.get(i) + "\n");
             }
         }
     }

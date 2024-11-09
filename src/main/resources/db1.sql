@@ -23,8 +23,6 @@ CREATE INDEX idx_producto_precio ON Producto (precio);
 CREATE INDEX idx_producto_stock ON Producto (stock_minimo ASC, stock_maximo DESC);
 CREATE INDEX idx_producto_cantidad_desc ON Producto (cantidad DESC);
 
-
-
 create table ItemFactura (
 	cod_producto int not null,
 	nro_factura int not null,

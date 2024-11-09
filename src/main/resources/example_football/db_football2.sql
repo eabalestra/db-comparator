@@ -63,3 +63,33 @@ BEGIN
     VALUES (p_equipo_local, p_equipo_visitante, p_fecha, p_arbitro);
 END;
 $$ LANGUAGE plpgsql;
+
+-- Trigger para actualizar el presupuesto del equipo cuando se inserta un nuevo jugador
+CREATE OR REPLACE FUNCTION actualizar_presupuesto_equipo() RETURNS TRIGGER AS $$
+BEGIN
+    UPDATE Equipo
+    SET presupuesto = presupuesto + 15000 -- Supongamos que cada jugador aumenta el presupuesto en 15000 en este esquema
+    WHERE id_equipo = NEW.id_equipo;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_actualizar_presupuesto
+AFTER INSERT ON Jugador
+FOR EACH ROW
+EXECUTE FUNCTION actualizar_presupuesto_equipo();
+
+-- Trigger para actualizar el marcador de un equipo después de que se inserta un partido
+CREATE OR REPLACE FUNCTION actualizar_marcador_equipo() RETURNS TRIGGER AS $$
+BEGIN
+    UPDATE Equipo
+    SET presupuesto = presupuesto + 7000 -- Supongamos que cada partido aumenta el presupuesto en 7000 en este esquema
+    WHERE id_equipo = NEW.equipo_local OR id_equipo = NEW.equipo_visitante;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_actualizar_marcador
+AFTER INSERT ON Partido
+FOR EACH ROW
+EXECUTE FUNCTION actualizar_marcador_equipo();
